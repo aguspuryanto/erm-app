@@ -1,39 +1,35 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="wrapper-app ion-padding">
+    <h1>Login to your Account</h1>
+    <form [formGroup]="FormLogin" (ngSubmit)="login()">
+      <ion-item lines="none">
+        <div color="dark"  slot="start">
+          <ion-icon slot="icon-only" name="person" ></ion-icon>
+        </div>
+        <ion-input type="text" placeholder="Username" formControlName="usid"></ion-input>
+      </ion-item>
 
-<ion-content>
-  <form (ngSubmit)="login()" [formGroup]="credentials">
-    <div class="input-group">
-      <ion-item>
-        <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+      <ion-item lines="none">
+        <div color="dark"  slot="start">
+          <ion-icon slot="icon-only" name="lock-closed"></ion-icon>
+        </div>
+        <ion-input [type]="!showPasswordText? 'password' : 'text'" placeholder="Password"  formControlName="pass"></ion-input>
+        <ion-icon color="dark" slot="icon-only" (click)="showPasswordText = !showPasswordText" [name]="!showPasswordText? 'eye-off' : 'eye'" slot="end" class="ion-align-self-center"></ion-icon>
       </ion-item>
-      <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
-        <span *ngIf="email.errors?.required">Email is required</span>
-        <span *ngIf="email.errors?.email">Email is invalid</span>
+      
+      <div class="ion-text-center">
+        <ion-row>
+          <ion-col size="4" class="ion-text-right">
+            <ion-checkbox value="remember"></ion-checkbox>
+          </ion-col>
+          <ion-col size="8" class="ion-text-left">Remember Me!</ion-col>
+        </ion-row>
+        
+        <ion-button type="submit" expand="full" shape="round" color="primary" [disabled]="!FormLogin.valid">Sign In</ion-button>
+  
+        <p class="ion-padding" (click)="forgotPass()">Forgot the password?</p>
+        <!-- <p (click)="contactAdminPage()">Contact Admin</p> -->
       </div>
-      <ion-item>
-        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
-      </ion-item>
-      <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
-        <span *ngIf="password.errors?.required">Password is required</span>
-        <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span>
-      </div>
-    </div>
- 
-    <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Log in</ion-button>
-    <ion-button type="button" expand="block" color="light" fill="clear">Not yet a member? Sign up!
-    </ion-button>
- 
-    <!-- <ion-button type="button" expand="block" color="tertiary">
-      <ion-icon name="logo-google" slot="start"></ion-icon>
-      Sign in with Google
-    </ion-button>
-    <ion-button type="button" expand="block" color="tertiary">
-      <ion-icon name="logo-apple" slot="start"></ion-icon>
-      Sign in with Apple
-    </ion-button> -->
-  </form>
+    </form>
+  </div>
 </ion-content>

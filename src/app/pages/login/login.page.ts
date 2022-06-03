@@ -10,7 +10,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  credentials: FormGroup;
+  FormLogin: FormGroup;
+  showPasswordText:any;
   
   constructor(
     private fb: FormBuilder,
@@ -21,9 +22,10 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.credentials = this.fb.group({
-      email: ['eve.holt@reqres.in', [Validators.required, Validators.email]],
-      password: ['cityslicka', [Validators.required, Validators.minLength(6)]],
+    this.FormLogin = this.fb.group({
+      action: ['1', [Validators.required]],
+      usid: ['', [Validators.required]],
+      pass: ['', [Validators.required, Validators.minLength(4)]],
     });
   }
  
@@ -31,7 +33,7 @@ export class LoginPage implements OnInit {
     const loading = await this.loadingController.create();
     await loading.present();
     
-    this.authService.login(this.credentials.value).subscribe(
+    this.authService.login(this.FormLogin.value).subscribe(
       async (res) => {
         await loading.dismiss();        
         this.router.navigateByUrl('/tabs', { replaceUrl: true });
@@ -50,12 +52,20 @@ export class LoginPage implements OnInit {
   }
  
   // Easy access for form fields
-  get email() {
-    return this.credentials.get('email');
+  get usid() {
+    return this.FormLogin.get('usid');
   }
   
-  get password() {
-    return this.credentials.get('password');
+  get pass() {
+    return this.FormLogin.get('pass');
+  }
+
+  forgotPass(){
+    this.router.navigateByUrl('/pass-recovery', { replaceUrl: true });
+  }
+
+  contactAdminPage(){
+    this.router.navigateByUrl('/contact-admin', { replaceUrl: true });
   }
 
 }
