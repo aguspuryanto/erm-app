@@ -26,18 +26,30 @@
 
   <!-- Default Segment -->
   <ion-segment [(ngModel)]="topSegment" (ionChange)="segmentChanged($event)" class="ion-no-padding">
-    <ion-segment-button value="task">
+    <ion-segment-button value="risk" layout="icon-start">
+      <ion-icon src="assets/icon-risk.svg"></ion-icon>
+      <ion-label class="big-title">Risk</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="task" layout="icon-start">
+      <ion-icon src="assets/icon-task.svg"></ion-icon>
       <ion-label class="big-title">Task</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="project" *ngIf="topSegment == 'project'">
+    <ion-segment-button value="project" layout="icon-start" *ngIf="topSegment == 'project'">
       <ion-label class="big-title">Project</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="approval">
+    <ion-segment-button value="approval" layout="icon-start">
+      <ion-icon src="assets/icon-approval.svg"></ion-icon>
       <ion-label class="big-title"l>Approval</ion-label>
     </ion-segment-button>
   </ion-segment>
 
   <ion-grid class="ion-padding justify-content-center ion-align-items-center shadow-text dmenu-grid">
+    <ion-row *ngIf="topSegment=='risk'" class="ion-padding-vertical ion-align-items-center">
+      <ion-col size="3" *ngFor="let item of segmentRiskMenu"  (click)="handleTopTask(item)">
+        <ion-img [src]="item.icon"></ion-img>
+        <ion-label>{{ item.text}}</ion-label>
+      </ion-col>
+    </ion-row>
     <ion-row *ngIf="topSegment=='task'" class="ion-padding-vertical ion-align-items-center">
       <ion-col size="3" *ngFor="let item of segmentTaskMenu"  (click)="handleTopTask(item)">
         <ion-img [src]="item.icon"></ion-img>
@@ -162,6 +174,25 @@
             <ion-col *ngFor="let item of summaryFlagged" (click)="handleFlaggedTask(item)" [size]="3">
               <ion-badge color="{{convertToColor(item.urai)}}">{{ item.value }}</ion-badge>
               <ion-label>{{ item.urai }}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="counterActive=='risk'" id="riskstatus-summary" class="ion-no-padding">
+    <ion-item lines="none">
+      <ion-label>Risk Status Summary</ion-label>
+      <ion-button fill="clear" slot="end" (click)="handleShowAll()">Show All</ion-button>
+    </ion-item>
+    <ion-card class="ion-padding">
+      <ion-card-content class="ion-no-padding">
+        <ion-grid>
+          <ion-row>
+            <ion-col *ngFor="let item of summaryAssignmentTask" (click)="handleAssignmentTask(item)" [size]="3">
+              <ion-badge color="{{convertToColor(item.urai)}}">{{ item.value }}</ion-badge>
+              <ion-label>{{ item.urai.replace('My ', '').replace(' Assignment', '') }}</ion-label>
             </ion-col>
           </ion-row>
         </ion-grid>

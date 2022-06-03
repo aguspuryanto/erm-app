@@ -13,6 +13,12 @@ export let CONFIGURATION = {
     Select: 'Select',
   },
 
+  segmentRiskMenu: [
+    { text: 'Control Owner', icon: 'assets/icon-task-assignment.svg' },
+    { text: 'Risk Owner', icon: 'assets/icon-task-mytask.svg' },
+    { text: 'CC Risk', icon: 'assets/icon-task-cctask.svg' },
+  ],
+
   segmentTaskMenu: [
     { text: 'Assignments', icon: 'assets/icon-task-assignment.svg' },
     { text: 'Group Tasks', icon: 'assets/icon-task-grouptask.svg' },

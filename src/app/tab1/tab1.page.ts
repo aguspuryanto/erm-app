@@ -33,6 +33,11 @@ export class Tab1Page {
   summaryFlagged: any = []
   searchText = '';
 
+  segmentRiskMenu: any = [];
+  segmentTaskMenu: any = [];
+  segmentProjectMenu: any = [];
+  segmentApprovalMenu: any = [];
+
   chartTitle:string = 'Assignment';
   public counterActive: string = 'assignment';
 
@@ -48,7 +53,7 @@ export class Tab1Page {
     public actionSheetController: ActionSheetController
   ) {
     // Chart.register(...registerables, ChartDataLabels);
-    this.topSegment = "task";
+    this.topSegment = "risk";
     this.title = new Date();
   }
 
@@ -57,6 +62,7 @@ export class Tab1Page {
   }
 
   ionViewDidEnter() {
+    this.segmentRiskMenu = CONFIGURATION.segmentRiskMenu;
     this.segmentTaskMenu = CONFIGURATION.segmentTaskMenu;
     // console.log(this.segmentTaskMenu, 'segmentTaskMenu')
 
@@ -107,10 +113,7 @@ export class Tab1Page {
   async getSummary(){
     // 
   }
-
-  segmentTaskMenu: any = [];
-  segmentProjectMenu: any = [];
-  segmentApprovalMenu: any = [];
+  
   olahData(data){
     const apiMenuData = data[0];
     const newData = data[1];
@@ -163,7 +166,8 @@ export class Tab1Page {
       this.summaryCcTask = newData.data.filter(t => t.urai.includes('Approval'));
 
       this.filterData();
-      this.loadAssignment();
+      // this.loadAssignment();
+      this.loadRiskSummary();
     }
   }
 
@@ -230,6 +234,11 @@ export class Tab1Page {
       }
     };
     this.router.navigate(['/detail-all'], navigationExtras);
+  }
+
+  loadRiskSummary(){
+    this.chartTitle = 'Risk Rangking';
+    this.counterActive = 'risk';
   }
 
   loadAssignment(){
