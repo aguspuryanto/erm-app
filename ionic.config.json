@@ -1,0 +1,7 @@
+{
+  "name": "ERMApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
