@@ -1,0 +1,33 @@
+{
+    "totalRecord": "4",
+    "data": [
+        {
+            "pr_id": "1",
+            "gr_id": "228",
+            "duedate": "3",
+            "ovd_id": "4",
+            "pr_name": "Urgent"
+        },
+        {
+            "pr_id": "2",
+            "gr_id": "228",
+            "duedate": "5",
+            "ovd_id": "4",
+            "pr_name": "Important"
+        },
+        {
+            "pr_id": "3",
+            "gr_id": "228",
+            "duedate": "10",
+            "ovd_id": "4",
+            "pr_name": "Normal"
+        },
+        {
+            "pr_id": "4",
+            "gr_id": "228",
+            "duedate": "99",
+            "ovd_id": "4",
+            "pr_name": "KIV"
+        }
+    ]
+}

@@ -1,0 +1,77 @@
+{
+    "data": [
+        {
+            "dept_code": "202",
+            "dept_name": "01 - Administration"
+        },
+        {
+            "dept_code": "581",
+            "dept_name": "09 - Distribution / Logistic"
+        },
+        {
+            "dept_code": "187",
+            "dept_name": "10 - Finance"
+        },
+        {
+            "dept_code": "188",
+            "dept_name": "11 - Human Resources"
+        },
+        {
+            "dept_code": "189",
+            "dept_name": "14W - Information System (IS)/ Information Technology (IT)-Jakarta Head Office"
+        },
+        {
+            "dept_code": "552",
+            "dept_name": "15W - Marketing Department-Jakarta Head Office"
+        },
+        {
+            "dept_code": "448",
+            "dept_name": "16 - Marketing Support & Service"
+        },
+        {
+            "dept_code": "840",
+            "dept_name": "18 - Network Relations"
+        },
+        {
+            "dept_code": "194",
+            "dept_name": "19W - Operation-Jakarta Head Office"
+        },
+        {
+            "dept_code": "577",
+            "dept_name": "19c - Operation-Surabaya"
+        },
+        {
+            "dept_code": "576",
+            "dept_name": "19Z - Operation-Banjarmasin"
+        },
+        {
+            "dept_code": "582",
+            "dept_name": "19X - Operation-Jakarta Branch Office"
+        },
+        {
+            "dept_code": "583",
+            "dept_name": "19d - Operation-Makasar"
+        },
+        {
+            "dept_code": "197",
+            "dept_name": "21 - Procurement / Purchasing"
+        },
+        {
+            "dept_code": "486",
+            "dept_name": "22 - Product Department"
+        },
+        {
+            "dept_code": "203",
+            "dept_name": "27 - Sales & Training"
+        },
+        {
+            "dept_code": "424",
+            "dept_name": "29 - Secretariat"
+        },
+        {
+            "dept_code": "200",
+            "dept_name": "31 - Shipping"
+        }
+    ],
+    "totalRecord": 18
+}

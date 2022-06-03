@@ -1,0 +1,33 @@
+ion-content {
+    --ion-text-color: var(--color, '#4E4E4E');
+    ion-img {
+        width: 60px;
+        margin: auto;
+    }
+
+    ion-col {
+        text-align: center;
+        ion-label {
+            // display: block;
+            font-size: 12px;
+        }
+    }
+
+    #countertask {
+        ion-badge {
+            width: 100%;
+            font-size: 32px;
+        }
+
+        ion-col {
+            text-align: center;
+            ion-label {
+                font-family: 'Roboto';
+                font-style: normal;
+                // font-weight: 700;
+                font-size: 12px;
+                line-height: 14px;
+            }
+        }
+    }
+}

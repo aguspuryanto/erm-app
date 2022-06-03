@@ -1,0 +1,70 @@
+{
+    "totalRecord": "13",
+    "data": [
+        {
+            "urut": "1",
+            "urai": "My Active Assignment",
+            "value": "0"
+        },
+        {
+            "urut": "2",
+            "urai": "My Overdue Assignment",
+            "value": "0"
+        },
+        {
+            "urut": "3",
+            "urai": "My Completed Assignment",
+            "value": "0"
+        },
+        {
+            "urut": "4",
+            "urai": "My Closed Assigment",
+            "value": "0"
+        },
+        {
+            "urut": "5",
+            "urai": "My Active Task",
+            "value": "0"
+        },
+        {
+            "urut": "6",
+            "urai": "My Overdue Task",
+            "value": "1"
+        },
+        {
+            "urut": "7",
+            "urai": "My Completed Task",
+            "value": "0"
+        },
+        {
+            "urut": "8",
+            "urai": "My Closed Task",
+            "value": "0"
+        },
+        {
+            "urut": "9",
+            "urai": "My Unassigned Task",
+            "value": "0"
+        },
+        {
+            "urut": "10",
+            "urai": "My Request",
+            "value": "0"
+        },
+        {
+            "urut": "11",
+            "urai": "Need Approval",
+            "value": "0"
+        },
+        {
+            "urut": "12",
+            "urai": "Own Flags",
+            "value": "0"
+        },
+        {
+            "urut": "13",
+            "urai": "Management Flags",
+            "value": "0"
+        }
+    ]
+}
