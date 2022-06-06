@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Network } from '@awesome-cordova-plugins/network/ngx';
+import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { Network } from '@awesome-cordova-plugins/network/ngx';
     HttpClientModule
   ],
   providers: [
+    AppVersion,
     Network,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

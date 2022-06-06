@@ -1,0 +1,121 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/tabs"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">
+      <!-- {{ title | date :  "MMMM d" }} -->
+      {{ titleText }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showNotifications()">
+        <ion-badge color="warning">3</ion-badge>
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" [fullscreen]="false">
+  <div class="box-section-review justify-content-center align-items-center">
+    <!-- <div class="heading">
+      <h2 class="ion-text-right">PROFILE</h2>
+    </div> -->
+    <ion-row>
+      <ion-col class="content-col">
+        <ion-thumbnail class="user-image">
+          <img src="../../assets/data/avatar.svg">
+        </ion-thumbnail>
+        <ion-text color="dark">
+          <h2 class="user-name">{{contact.us_fullname}}</h2>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+    <!-- <ion-item lines="none">
+      <ion-thumbnail class="user-image" slot="start">
+        <img src="../../assets/data/avatar.svg">
+      </ion-thumbnail>
+      <ion-label>
+        <ion-text color="dark">
+          <h2 class="xuser-name">{{contact.us_fullname}}</h2>
+          <p>{{contact.role_name}}</p>
+          <p>[ {{contact.us_loginname}} ]</p>
+        </ion-text>
+      </ion-label>
+    </ion-item> -->
+  </div>
+
+  <!-- <div class="box-section-near">
+    <div class="inner">
+      <div class="inner-scroll">
+        <div class="item shadow" *ngFor="let item of slideArr" [ngStyle]="{'background-color': item.scolor}">
+          <div class="info">
+            <div class="name">{{item.sname}}</div>
+            <div class="sub">
+              <ion-icon size="large" name="{{item.sicon}}"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ion-row *ngIf="!commonService.isEmptyObject(contact)">
+    <ion-col class="content-col">
+      <ion-list>
+        <ion-item lines="none">
+          <ion-label position="stacked">Address</ion-label>
+          <ion-textarea>{{ contact.us_address }}</ion-textarea>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="stacked">City</ion-label>
+          <ion-input color="primary" readonly="true">{{contact.us_city}}</ion-input>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="stacked">Timezone Setting</ion-label>
+          <ion-select [(ngModel)]="contact.timezone" class="ion-text-wrap">
+            <ion-select-option *ngFor="let timezone of timeZoneArr" [value]="timezone.tz_code">{{timezone.tz_desc}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input color="primary" readonly="true">{{contact.us_email}}</ion-input>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="stacked">Phone Number</ion-label>
+          <ion-input color="primary" readonly="true">{{contact.us_directmobillephone}}</ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row> -->
+
+  <ion-list>
+    <ion-item-divider></ion-item-divider>
+    <ion-item lines="none" detail="true">
+      <ion-icon slot="start" name="person-outline"></ion-icon>
+      <ion-label>Update Profile</ion-label>
+    </ion-item>
+    <ion-item lines="none" detail="true">
+      <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+      <ion-label>Privacy Policy</ion-label>
+    </ion-item>
+    <ion-item lines="none" detail="true">
+      <ion-icon slot="start" name="information-circle-outline"></ion-icon>
+      <ion-label>Help & Support</ion-label>
+    </ion-item>
+    <ion-item lines="none" detail="true">
+      <ion-icon slot="start" name="chatbubble-ellipses-outline"></ion-icon>
+      <ion-label>Contact Us</ion-label>
+    </ion-item>
+    <ion-item lines="none" button (click)="logout()">
+      <ion-icon color="danger" slot="start" name="log-out-outline"></ion-icon>
+      <ion-label color="danger">Logout</ion-label>
+    </ion-item>
+  </ion-list>
+  
+  <div class="version text-center">
+    <ion-label>{{AppName || 'FTS'}}</ion-label>
+    <ion-label>ver {{VersionCode || '1.0.2'}}</ion-label>
+  </div>
+</ion-content>

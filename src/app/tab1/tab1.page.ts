@@ -11,14 +11,16 @@ import { CONFIGURATION } from '../services/config.service';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  @ViewChild("doughnutCanvas", {static: true}) doughnutCanvas: ElementRef;
+  // @ViewChild("doughnutCanvas", {static: true}) doughnutCanvas: ElementRef;
   @ViewChild('content') private content: any;
 
   // doughnutChart: Chart;
-  showdoughnutCanvas: boolean = false;
-  topSegment: any;
-  title: Date;
+  // showdoughnutCanvas: boolean = false;
+  // title: Date;
   titleText = 'ERM';
+  topSegment = 'risk';
+  chartTitle = 'Assignment';
+  counterActive = 'assignment';
 
   groupTask: any = []; //'Unassigned','Active','Overdue','Completed','Closed','Archived','Canceled'
   myTask: any = []; //'Create Task','Unassigned','Active','Overdue','Completed','Closed','Archived','Canceled','Transfer Task'
@@ -38,9 +40,6 @@ export class Tab1Page {
   segmentProjectMenu: any = [];
   segmentApprovalMenu: any = [];
 
-  chartTitle:string = 'Assignment';
-  public counterActive: string = 'assignment';
-
   chartLabels: any = ["Active", "Overdue", "Completed", "Closed", "Inactive"]
   chartData: any = [12, 19, 3, 5, 3]
   storageValue: any = {};
@@ -54,7 +53,7 @@ export class Tab1Page {
   ) {
     // Chart.register(...registerables, ChartDataLabels);
     this.topSegment = "risk";
-    this.title = new Date();
+    // this.title = new Date();
   }
 
   ngOnInit() {
@@ -346,7 +345,7 @@ export class Tab1Page {
   }
 
   loadChart(){
-    console.log(this.showdoughnutCanvas, 'showdoughnutCanvas')
+    // console.log(this.showdoughnutCanvas, 'showdoughnutCanvas')
   }
 
   async getAssignmentsList(){
@@ -657,18 +656,21 @@ export class Tab1Page {
   }
 
   segmentChanged(ev: any) {
-    console.log('Segment changed:', ev.detail.value);
-    this.topSegment = ev.detail.value
+    // console.log('Segment changed:', ev.detail.value);
+    this.topSegment = ev.detail.value;
+    this.counterActive = ev.detail.value;
+    console.log('Segment changed:', this.topSegment + ';' + this.counterActive);
 
-    if(ev.detail.value == 'task') {
+    if(this.topSegment == 'task') {
       // this.getSummary();
+      this.loadAssignment();
     }
 
-    if(ev.detail.value == 'approval') {
+    if(this.topSegment == 'approval') {
       this.getApprovalSummary();
     }
 
-    if(ev.detail.value == 'project') {
+    if(this.topSegment == 'project') {
       // project-assignor, project-leader, project-assignee
       // this.getApprovalSummary();
     }

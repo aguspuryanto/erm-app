@@ -1,0 +1,128 @@
+ion-content {
+    --padding-top: 16px;
+    color: var(-ion-color-primary, #F61F6C);
+  
+    .content-col {
+      --ion-grid-column-padding: 0px;
+    }
+  
+    .user-image {
+      --size: 150px;
+      --border-radius: 100%;
+      margin: auto;
+    }
+  
+    .user-name {
+      padding-top: 16px;
+      margin: auto;
+      text-align: center;
+    }
+  
+    .version {
+      ion-label {
+        display: block;
+      }
+    }
+  
+    ion-slide {
+      ion-col {
+        height: 125px;
+        background: rgba(246, 31, 108, 0.6);
+        border-radius: 15px;
+      }
+    }
+  }
+  
+  ion-card {
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+      overflow: visible;
+      margin: 16px 0 24px;
+      position: relative;
+      padding-top: 60px;
+    
+      .img-wrapper {
+        position: absolute;
+        left: 50%;
+        top: -30px;
+        transform: translateX(-50%);
+        img {
+          border-radius: 10px;
+          width: 80px;
+          height: 80px;
+        }
+    
+        ion-button {
+          --border-width: 1px;
+          --border-color: var(--ion-color-light-shade);
+          --border-style: solid;
+          --padding-start: 0;
+          --padding-end: 0;
+          --padding-bottom: 0;
+          --padding-top: 0;
+    
+          --border-radius: 50%;
+          height: 26px;
+          width: 26px;
+    
+          position: absolute;
+          right: -10px;
+          bottom: -10px;
+    
+          ion-icon {
+            width: 14px;
+            height: 14px;
+          }
+        }
+      }
+    }
+  
+    .box-section-review {
+      margin-bottom: 0px;
+      .heading {
+          font-size: 16px;
+          font-weight: 700;
+          color: var(--ion-color-main-text-dark);
+          letter-spacing: -0.3px;
+          margin-bottom: 20px;
+          color: #F61F6C;
+      }
+    }
+  
+    .box-section-near {
+      margin: 15px 0px;
+      .inner {
+        overflow-y: auto;
+        padding: 0 0 16px 16px;
+        margin: 0 -16px;
+        .inner-scroll {
+            display: flex;
+            width: max-content;
+            >.item {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: flex-start;
+                width: 120px;
+                height: 90px;
+                border-radius: 10px;
+                border: 1px solid var(--ion-color-border);
+                padding: 15px;
+                margin-right: 15px;
+                position: relative;
+                .info {
+                  padding-left: 0px;
+                  .name {
+                      // font-size: 14px;
+                      font-weight: 600;
+                      line-height: 17px;
+                      color: var(--ion-color-main-text-dark);
+                      padding-right: 20px;
+                      margin-bottom: 15px;
+                  }
+                  .sub {
+                      // font-size: 12px;
+                  }
+                }
+            }
+        }
+      }
+    }

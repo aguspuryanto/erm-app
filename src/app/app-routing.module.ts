@@ -36,6 +36,14 @@ const routes: Routes = [
   {
     path: 'detail-comment',
     loadChildren: () => import('./pages/detail-comment/detail-comment.module').then( m => m.DetailCommentPageModule)
+  },
+  {
+    path: 'detail',
+    loadChildren: () => import('./pages/detail/detail.module').then( m => m.DetailPageModule)
+  },
+  {
+    path: 'calendar',
+    loadChildren: () => import('./pages/calendar/calendar.module').then( m => m.CalendarPageModule)
   }
 ];
 @NgModule({
