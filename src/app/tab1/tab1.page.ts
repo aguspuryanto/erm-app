@@ -63,6 +63,7 @@ export class Tab1Page {
   ionViewDidEnter() {
     this.segmentRiskMenu = CONFIGURATION.segmentRiskMenu;
     this.segmentTaskMenu = CONFIGURATION.segmentTaskMenu;
+    this.segmentApprovalMenu = CONFIGURATION.segmentApprovalMenu;
     // console.log(this.segmentTaskMenu, 'segmentTaskMenu')
 
     const apiMenu = this.commonService.getlocalStorageObject('apimenuData');

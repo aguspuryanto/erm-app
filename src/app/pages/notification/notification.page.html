@@ -8,5 +8,17 @@
 </ion-header>
 
 <ion-content>
-
+  <!-- List of Text Items -->
+  <ion-list>
+    <ion-list-header>Summary</ion-list-header>
+    <ion-item *ngFor="let item of summaryTask">
+      <div id="summary-date" slot="start">
+        <ion-badge>{{ commonService.convertformatDay(item.datelastx) }}</ion-badge>
+      </div>
+      <ion-label>
+        <h3>{{item.topic }}</h3>
+        <p [innerHTML]="item.track_desc"></p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

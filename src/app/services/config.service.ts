@@ -28,6 +28,13 @@ export let CONFIGURATION = {
     { text: 'Flagged Task', icon: 'assets/icon-task-flaggedtask.svg' }
   ],
 
+  segmentApprovalMenu: [
+    { text: 'My Request', icon: 'assets/icon-approval-myrequest.svg' },
+    { text: 'My Approval', icon: 'assets/icon-approval-myapproval.svg' },
+    { text: 'CC Approval', icon: 'assets/icon-approval-ccapproval.svg' },
+    { text: 'Action History', icon: 'assets/icon-approval-actionhistory.svg' }
+  ],
+
   // vTitle
   listTaskId: {
     request: 3,
