@@ -35,6 +35,20 @@ export let CONFIGURATION = {
     { text: 'Action History', icon: 'assets/icon-approval-actionhistory.svg' }
   ],
 
+  listGroupFilter: [
+    {my_val: 0, my_text:'No Grouping'},
+    {my_val: 1, my_text:'Country'},
+    {my_val: 2, my_text:'Company'},
+    {my_val: 3, my_text:'Department'},
+    {my_val: 4, my_text:'Category'},
+    {my_val: 5, my_text:'Assignor'},
+    {my_val: 6, my_text:'Priority'},
+    {my_val: 8, my_text:'Last Updated Date'},
+    {my_val: 9, my_text:'Last Updated User'},
+    {my_val: 10, my_text:'Next Reporting Date'},
+    {my_val: 11, my_text:'Topic'}
+  ],
+
   // vTitle
   listTaskId: {
     request: 3,

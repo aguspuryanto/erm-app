@@ -25,7 +25,7 @@ export class PriorityPage implements OnInit {
   params: any = []
   dataArra: any = []
   dataArraTot: number = 0
-  topTitle = 'Active Task';
+  topTitle = 'Priority';
   storageValue: any = {};
   
   task_type = '';

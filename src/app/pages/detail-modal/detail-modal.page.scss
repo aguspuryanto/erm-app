@@ -1,0 +1,93 @@
+ion-content {
+    ion-card {
+        ion-card-content h2 {
+            color: var(--ion-color-primary);
+        }
+        ion-item {
+            color: #4E4E4E;
+            ion-icon {
+                color: #3880FF;
+                font-size: 16px;
+                &.added {
+                    color: var(--ion-color-danger);
+                }
+            }
+
+            ion-icon[name="star"], ion-icon[name="star-outline"] {
+                color: #F61F6C;            
+            }
+
+            ion-icon[slot="end"] {
+                margin: 0px;
+            }
+
+            ion-label {
+                padding-left: 10px;
+                ion-text span {
+                    font-weight: 700;
+                }
+            }
+        }
+
+        ion-list {
+            ion-item {
+                margin: -10px 0px !important;
+            }
+
+        }
+        ion-footer {
+            ion-label {
+                display: block;
+            }
+        }
+    }
+    
+    .list-history h4 {
+        color: #4E4E4E;
+    }
+}
+
+// ion-content {
+//     #background-content {
+//         background-color:rgba(76, 223, 233, 0.9);
+//     }
+// }
+
+// .topdesc {
+//     background: #F2F7F8;
+//     border-radius: 10px;
+//     margin-left: -20px;
+//     margin-right: 40px;
+
+//     .topcontent {
+//         padding: 20px;
+//         padding-left: 40px;
+//         margin-bottom: 20px;
+//     }
+// }
+
+// .desc {
+//     background: #F2F7F8;
+//     border-radius: 10px;
+//     margin-right: -20px;
+//     margin-left: 40px;
+
+//     .descontent {
+//         padding: 20px;
+//         padding-right: 40px;
+//         margin-bottom: 20px;
+//     }
+// }
+
+// ion-content {
+//     --background: #4CDFE9E5;
+// }
+
+// ion-segment-button {
+//     --color: white;
+// }
+
+// ion-segment {
+//     --background:#434242;
+//     border-radius: 10px;
+// }

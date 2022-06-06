@@ -120,7 +120,12 @@ export class AuthenticationService {
       let queryParams = this.commonService.ObjectToParams(params);
       return this.http.get(`${API_SITE}/API_Logout?` + queryParams).pipe(
           tap({
-              next: (data) => console.log('next:', data),
+              next: (data) => {
+                console.log('next:', data)
+                Storage.remove({key: DATA_KEY});
+                Storage.remove({key: TOKEN_KEY});
+                this.isAuthenticated.next(false);
+              },
               error: (error) => console.log(error)
           })
       );

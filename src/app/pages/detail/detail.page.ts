@@ -7,6 +7,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CommonService } from 'src/app/services/common.service';
 import { DetailCommentPage } from '../detail-comment/detail-comment.page';
 import { DetailModalPage } from '../detail-modal/detail-modal.page';
+import { FilterSearchPage } from '../filter-search/filter-search.page';
 
 @Component({
   selector: 'app-detail',
@@ -256,6 +257,24 @@ export class DetailPage implements OnInit {
   }
 
   showNotifications(){
+  }
+
+  async filterSearch(){
+    const modal = await this.modalController.create({
+      component: FilterSearchPage,
+      cssClass: 'my-custom-class',
+      swipeToClose: true,
+      // mode: 'ios',
+      backdropDismiss: true,
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps: { item: this.searchTerm }
+    });
+
+    modal.onDidDismiss().then(data => {
+      console.log('FilterSearchPage return :' + JSON.stringify(data));
+    });
+
+    return await modal.present();
   }
   
   filterItems(event){

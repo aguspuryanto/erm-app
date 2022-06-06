@@ -1,9 +1,56 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>filter-search</ion-title>
+    <ion-buttons slot="start">
+        <ion-button (click)="closeModal()"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
+    </ion-buttons>
+    <ion-title>Advance Search</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content [fullscreen]="true">
+  <div class="wrapper-payment-success ion-padding">
+    <div class="content-area">
+      <ion-list lines="full" class="ion-no-margin">
+        <!-- <ion-list-header> Task Attributes </ion-list-header> -->
+        <ion-item lines="none">
+          <ion-label position="stacked">Assignor</ion-label>
+          <ion-select placeholder="Select One" [(ngModel)]="filterSearch.assignor" (ionChange)="onChangeAssignor($event)">
+            <ion-select-option *ngFor="let val of listAssignor" [value]="val.my_val">{{ val.my_text}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="stacked">Assignee</ion-label>
+          <ion-select placeholder="Select One" [(ngModel)]="filterSearch.assignee" (ionChange)="onChangeAssignee($event)">
+            <ion-select-option *ngFor="let val of listAssignee" [value]="val.my_val">{{ val.my_text}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="stacked">Group</ion-label>
+          <ion-select placeholder="Select One" [(ngModel)]="filterSearch.group" (ionChange)="onChangeGroup($event)">
+            <ion-select-option *ngFor="let val of listGroup" [value]="val">{{ val }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="stacked">Search By</ion-label>
+          <ion-select placeholder="Select One" [(ngModel)]="filterSearch.searchby" (ionChange)="onChangeSearhBy($event)">
+            <ion-select-option value="f">Female</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="stacked">Search Key</ion-label>
+          <ion-input type="text" placeholder="Select One" [(ngModel)]="filterSearch.searchkey" (ionChange)="onChangeSearchKey($event)"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label position="stacked">Status</ion-label>
+          <ion-select placeholder="Select One" [(ngModel)]="filterSearch.status" (ionChange)="onChangeStatus($event)">
+            <ion-select-option value="f">Female</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div class="section-action ion-padding">
+      <ion-button (click)="back()" color="secondary">Reset</ion-button>
+      <ion-button (click)="applyFilter()">Apply</ion-button>
+    </div>
+  </div>
 </ion-content>

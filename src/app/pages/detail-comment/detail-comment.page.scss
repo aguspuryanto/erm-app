@@ -1,0 +1,46 @@
+ion-content {
+    font-family: "Hammersmith One";
+    h2 {
+        font-weight: 400;
+        font-size: 30px;
+        color: #F61F6C;
+    }
+
+    ion-item {
+        ion-label {
+            font-size: 15px !important;
+            h3 {
+                font-size: 18px !important;
+                color: #2BA0C5;
+            }
+            p {
+                font-size: 12px !important;
+                color: #F61F6C;
+            }
+        }
+
+        img {
+            padding: 20px 10px;
+            // position: absolute;
+            // width: 204px;
+            // height: 172px;
+        }
+    }
+
+    ion-textarea {
+        max-width: 90% !important;
+        --background: rgba(76, 223, 233, 0.2);
+        border-radius: 10px;
+    }
+
+    ion-fab {
+        margin-top: 125px;
+        background: rgba(246, 31, 108, 0.2);
+        border-radius: 10px;
+        ion-button {
+            color: #F61F6C;
+            display: block;
+            margin: 0px;
+        }
+    }
+}

@@ -23,7 +23,7 @@
     <div class="outer-searchbar with-filter">
       <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterItems($event)" (ionCancel)="onCancel($event)" placeholder="Search Task" [debounce]="500" animated="true"></ion-searchbar>
       <div class="filters">
-        <ion-button fill="clear"><ion-icon name="options-outline"></ion-icon></ion-button>
+        <ion-button (click)="filterSearch()" fill="clear"><ion-icon name="options-outline"></ion-icon></ion-button>
       </div>
     </div>
   </div>

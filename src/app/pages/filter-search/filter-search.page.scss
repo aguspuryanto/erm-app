@@ -1,0 +1,31 @@
+ion-content {
+    --ion-text-color: var(--color, '#4E4E4E');
+
+    .wrapper-payment-success {
+        padding-bottom: 100px;
+        // height: 100%;
+        display: flex;
+        align-items: center;
+        .content-area {
+            width: 100%;
+            text-align: center;
+        }
+        .section-action {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            bottom: 15%;
+            left: 0;
+            width: 100%;
+            padding-top: 25px;
+            padding-bottom: 25px;
+            ion-button {
+                --border-radius: 30px;
+                width: 306px;
+                height: 50px;
+                font-size: 14px;
+                font-weight: 700;
+            }
+        }
+    }
+}

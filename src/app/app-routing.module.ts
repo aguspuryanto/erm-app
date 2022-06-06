@@ -42,6 +42,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/detail/detail.module').then( m => m.DetailPageModule)
   },
   {
+    path: 'detail/:cat/:id',
+    loadChildren: () => import('./pages/detail/detail.module').then( m => m.DetailPageModule),
+    // canLoad: [AuthGuard] // Secure all child pages
+  },
+  {
     path: 'calendar',
     loadChildren: () => import('./pages/calendar/calendar.module').then( m => m.CalendarPageModule)
   },
