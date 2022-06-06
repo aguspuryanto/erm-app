@@ -59,15 +59,15 @@
 
     <ion-row *ngIf="topSegment=='project'" class="ion-padding-vertical justify-content-center align-items-center">
       <ion-col size="3" *ngFor="let item of segmentProjectMenu" class="project  ion-padding-vertical">
-        <ion-icon name="images" style="zoom:2.5;" color="light"></ion-icon>
+        <ion-img [src]="item.icon"></ion-img>
         <ion-label id="{{this.commonService.convertToSlug(item.text)}}-button">{{item.text}}</ion-label>
       </ion-col>
     </ion-row>
 
     <ion-row *ngIf="topSegment=='approval'" class="ion-padding-vertical justify-content-center align-items-center">
       <ion-col size="3" *ngFor="let item of segmentApprovalMenu" class="approval ion-padding-vertical">
-        <ion-icon name="images" style="zoom:2.5;" color="light"></ion-icon>
-        <ion-label id="{{this.commonService.convertToSlug(item.text)}}-button">{{item.loadingText}}</ion-label>
+        <ion-img [src]="item.icon"></ion-img>
+        <ion-label>{{ item.text}}</ion-label>
       </ion-col>
       <!-- <ion-col size="3" class="myrequest ion-padding-vertical" (click)="loadMyRequest()">
         <ion-img src="assets/request.png"></ion-img>

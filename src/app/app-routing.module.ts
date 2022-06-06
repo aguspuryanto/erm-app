@@ -48,6 +48,18 @@ const routes: Routes = [
   {
     path: 'notification',
     loadChildren: () => import('./pages/notification/notification.module').then( m => m.NotificationPageModule)
+  },
+  {
+    path: 'task-success',
+    loadChildren: () => import('./pages/task-success/task-success.module').then( m => m.TaskSuccessPageModule)
+  },
+  {
+    path: 'filter-search',
+    loadChildren: () => import('./pages/filter-search/filter-search.module').then( m => m.FilterSearchPageModule)
+  },
+  {
+    path: 'priority',
+    loadChildren: () => import('./pages/priority/priority.module').then( m => m.PriorityPageModule)
   }
 ];
 @NgModule({

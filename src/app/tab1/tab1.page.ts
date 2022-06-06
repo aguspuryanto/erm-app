@@ -117,6 +117,9 @@ export class Tab1Page {
   olahData(data){
     const apiMenuData = data[0];
     const newData = data[1];
+    // this.segmentTaskMenu = apiMenuData.data.filter(t => t.text.includes('Task'))[0].children;
+    // this.segmentProjectMenu = apiMenuData.data.filter(t => t.text.includes('Project'))[0].children;
+    // this.segmentApprovalMenu = apiMenuData.data.filter(t => t.text.includes('Approval'))[0].children;
     
     if(this.commonService.isEmptyObject(apiMenuData.data)){
       console.log(apiMenuData.msg,'')
@@ -127,10 +130,6 @@ export class Tab1Page {
       };
       // this.router.navigate(['login'], navigationExtras);
     } else {
-      // this.segmentTaskMenu = apiMenuData.data.filter(t => t.text.includes('Task'))[0].children;
-      this.segmentProjectMenu = apiMenuData.data.filter(t => t.text.includes('Project'))[0].children;
-      this.segmentApprovalMenu = apiMenuData.data.filter(t => t.text.includes('Approval'))[0].children;
-
       // groupTask
       this.groupTask = []
       for(let i=0; i<apiMenuData.data[1].children[0].children.length; i++) {

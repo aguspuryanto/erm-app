@@ -1,0 +1,20 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <!-- <ion-title>task-success</ion-title> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="wrapper-payment-success ion-padding">
+    <div class="content-area">
+      <div class="icon">
+        <img src="../../../../assets/icon-action-success.svg" alt="">
+      </div>
+      <h1>Success</h1>
+      <p>{{ textMsg }}</p>
+    </div>
+    <div class="section-action ion-padding">
+      <ion-button (click)="back()">Done</ion-button>
+    </div>
+  </div>
+</ion-content>
