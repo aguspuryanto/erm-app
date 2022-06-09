@@ -77,14 +77,14 @@ export class AppComponent {
         console.log(state, '45_state')
         if (state) {
           // this.router.navigate(['tabs']);
-          const apiMenu = this.authService.getAPIMenu();
-          const sumaryTask = this.authService.sumaryTask();
-          forkJoin([apiMenu, sumaryTask]).subscribe(data => {  
-            // console.log(data, '112_');
-            this.commonService.setlocalStorageObject('apimenuData', data);
-          }, (error) => {
-            console.log(error);
-          });
+          // const apiMenu = this.authService.getAPIMenu();
+          // const sumaryTask = this.authService.sumaryTask();
+          // forkJoin([apiMenu, sumaryTask]).subscribe(data => {  
+          //   // console.log(data, '112_');
+          //   this.commonService.setlocalStorageObject('apimenuData', data);
+          // }, (error) => {
+          //   console.log(error);
+          // });
         } else {
           let navigationExtras: NavigationExtras = {
             queryParams: {

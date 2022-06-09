@@ -1,5 +1,6 @@
 export let CONFIGURATION = {
   apiEndpoint: 'http://care3.dxn2u.net:8282/workflow2',
+  webapiEndpoint: 'https://erm-dev.dxn2u.com',
   DATA_KEY: 'mydata',
   TOKEN_KEY: 'my-token',
   LOGIN_KEY: 'mylogin',

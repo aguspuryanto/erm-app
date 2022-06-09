@@ -1,0 +1,6 @@
+{
+	"appId": "com.dxn2u.erm",
+	"appName": "ERMApp",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

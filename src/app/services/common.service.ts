@@ -94,12 +94,7 @@ export class CommonService {
   }
 
   convertToColor(item){
-    // console.log(item, 'convertToColor')
-    if(item == 'Active') return 'active'
-    if(item == 'Overdue') return 'overdue'
-    if(item == 'Completed') return 'completed'
-    if(item == 'Closed') return 'closed'
-    if(item == 'Unassigned') return 'primary'
+    return this.convertToSlug(item)
   }
 
   // stsfilter = 1 View All, 2 Unassigned, 3 Active, 4 Overdue, 5 Completed, 6 Closed (Active CC Task)

@@ -30,10 +30,40 @@ export class LoginPage implements OnInit {
   }
  
   async login() {
+    this.ermLogin();
+    
+    // const loading = await this.loadingController.create();
+    // await loading.present();
+    
+    // this.authService.login(this.FormLogin.value).subscribe(
+    //   async (res) => {
+    //     await loading.dismiss();        
+    //     this.router.navigateByUrl('/tabs', { replaceUrl: true });
+    //   },
+    //   async (res) => {
+    //     await loading.dismiss();
+    //     const alert = await this.alertController.create({
+    //       header: 'Login failed',
+    //       message: res.error.error,
+    //       buttons: ['OK'],
+    //     });
+ 
+    //     await alert.present();
+    //   }
+    // );
+  }
+ 
+  async ermLogin() {
     const loading = await this.loadingController.create();
     await loading.present();
     
-    this.authService.login(this.FormLogin.value).subscribe(
+    const newFormLogin = {
+      username: this.FormLogin.get('usid').value,
+      password: this.FormLogin.get('pass').value
+    }
+    console.log(newFormLogin, '40_')
+    // this.authService.login(this.FormLogin.value).subscribe(
+    this.authService.webLogin(newFormLogin).subscribe(
       async (res) => {
         await loading.dismiss();        
         this.router.navigateByUrl('/tabs', { replaceUrl: true });

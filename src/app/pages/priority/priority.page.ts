@@ -75,54 +75,15 @@ export class PriorityPage implements OnInit {
       this.olahData(data);
     });
     
-    this.getTaskList();
+    // this.getTaskList();
   };
 
   olahData(data){
     const apiMenuData = data[0];
     const newData = data[1];
-    
-    if(this.commonService.isEmptyObject(apiMenuData.data)){
-      console.log(apiMenuData.msg,'')
-      // this.router.navigateByUrl('/login', { replaceUrl: true });
-      
-    } else {
-      // groupTask
-      this.groupTask = []
-      for(let i=0; i<apiMenuData.data[1].children[0].children.length; i++) {
-        this.groupTask.push(apiMenuData.data[1].children[0].children[i].text);
-      }
-
-      // myTask
-      this.myTask = []
-      for(let i=0; i<apiMenuData.data[1].children[1].children.length; i++) {
-        this.myTask.push(apiMenuData.data[1].children[1].children[i].text);
-      }
-
-      // My Assignments
-      this.myAssignments = []
-      for(let i=0; i<apiMenuData.data[1].children[2].children.length; i++) {
-        this.myAssignments.push(apiMenuData.data[1].children[2].children[i].text);
-      }
-
-      // myRequest
-      this.myRequest = []
-      for(let i=0; i<apiMenuData.data[1].children[3].children.length; i++) {
-        this.myRequest.push(apiMenuData.data[1].children[3].children[i].text);
-      }
-
-      // CC Tasks
-      this.myCCTask = []
-      for(let i=0; i<apiMenuData.data[1].children[4].children.length; i++) {
-        this.myCCTask.push(apiMenuData.data[1].children[4].children[i].text);
-      }
-
-      // Flagged Task
-      this.flaggedTask = []
-      for(let i=0; i<apiMenuData.data[1].children[5].children.length; i++) {
-        this.flaggedTask.push(apiMenuData.data[1].children[5].children[i].text);
-      }
-    }
+    fetch("../../assets/data/priorityArray.json").then(res=>res.json()).then(json=>{
+      this.recentSearches = json;
+    });
   }
   
   async getTaskList(){

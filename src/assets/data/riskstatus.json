@@ -1,0 +1,25 @@
+{
+    "totalRecord": "0",
+    "data": [
+        {
+            "urut": "1",
+            "urai": "Active",
+            "value": "5"
+        },
+        {
+            "urut": "2",
+            "urai": "Overdue",
+            "value": "0"
+        },
+        {
+            "urut": "3",
+            "urai": "Completed",
+            "value": "2"
+        },
+        {
+            "urut": "4",
+            "urai": "Closed",
+            "value": "1"
+        }
+    ]
+}

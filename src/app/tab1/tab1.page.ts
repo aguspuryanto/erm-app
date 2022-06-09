@@ -11,28 +11,15 @@ import { CONFIGURATION } from '../services/config.service';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  // @ViewChild("doughnutCanvas", {static: true}) doughnutCanvas: ElementRef;
   @ViewChild('content') private content: any;
-
-  // doughnutChart: Chart;
-  // showdoughnutCanvas: boolean = false;
-  // title: Date;
+  
   titleText = 'ERM';
   topSegment = 'risk';
-  chartTitle = 'Assignment';
-  counterActive = 'assignment';
+  chartTitle = 'Risk Ranking';
+  counterActive = 'risk';
 
-  groupTask: any = []; //'Unassigned','Active','Overdue','Completed','Closed','Archived','Canceled'
-  myTask: any = []; //'Create Task','Unassigned','Active','Overdue','Completed','Closed','Archived','Canceled','Transfer Task'
-  myRequest: any = []; //'Create Request','Active','Overdue','On Track','Approved','Reviewed','Executed','Rejected','Archived'
-  myApproval: any = []; //'Active','Overdue','On Track','Approved','Reviewed','Executed','Rejected','Archived'
-
-  summaryTask: any = []
-  summaryAssignmentTask: any = []
-  summaryMyTask: any = []
-  summaryRequest: any = []
-  summaryCcTask: any = []
-  summaryFlagged: any = []
+  summaryRiskRangking: any = []
+  summaryRiskStatus: any = []
   searchText = '';
 
   segmentRiskMenu: any = [];
@@ -51,9 +38,7 @@ export class Tab1Page {
     private loadingCtrl: LoadingController,
     public actionSheetController: ActionSheetController
   ) {
-    // Chart.register(...registerables, ChartDataLabels);
-    this.topSegment = "risk";
-    // this.title = new Date();
+    // this.topSegment = "risk";
   }
 
   ngOnInit() {
@@ -62,10 +47,6 @@ export class Tab1Page {
 
   ionViewDidEnter() {
     this.segmentRiskMenu = CONFIGURATION.segmentRiskMenu;
-    this.segmentTaskMenu = CONFIGURATION.segmentTaskMenu;
-    this.segmentApprovalMenu = CONFIGURATION.segmentApprovalMenu;
-    // console.log(this.segmentTaskMenu, 'segmentTaskMenu')
-
     const apiMenu = this.commonService.getlocalStorageObject('apimenuData');
     apiMenu.then((data: any) => {
       console.log(data, 'data');
@@ -115,114 +96,15 @@ export class Tab1Page {
   }
   
   olahData(data){
-    const apiMenuData = data[0];
-    const newData = data[1];
-    // this.segmentTaskMenu = apiMenuData.data.filter(t => t.text.includes('Task'))[0].children;
-    // this.segmentProjectMenu = apiMenuData.data.filter(t => t.text.includes('Project'))[0].children;
-    // this.segmentApprovalMenu = apiMenuData.data.filter(t => t.text.includes('Approval'))[0].children;
-    
-    if(this.commonService.isEmptyObject(apiMenuData.data)){
-      console.log(apiMenuData.msg,'')
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          return: 'login'
-        }
-      };
-      // this.router.navigate(['login'], navigationExtras);
-    } else {
-      // groupTask
-      this.groupTask = []
-      for(let i=0; i<apiMenuData.data[1].children[0].children.length; i++) {
-        this.groupTask.push(apiMenuData.data[1].children[0].children[i].text);
-      }
-      console.log(this.groupTask, 'groupTask');
+    // const apiMenuData = data[0];
+    // const newData = data[1];
+    fetch("../../assets/data/riskranking.json").then(res=>res.json()).then(json=>{
+      this.summaryRiskRangking = json['data'];
+    });
 
-      // myTask
-      this.myTask = []
-      for(let i=0; i<apiMenuData.data[1].children[1].children.length; i++) {
-        this.myTask.push(apiMenuData.data[1].children[1].children[i].text);
-      }
-
-      // myRequest
-      this.myRequest = []
-      for(let i=0; i<apiMenuData.data[1].children[3].children.length; i++) {
-        this.myRequest.push(apiMenuData.data[1].children[3].children[i].text);
-      }
-
-      // myApproval
-      this.myApproval = []
-      for(let i=0; i<apiMenuData.data[1].children[1].children.length; i++) {
-        this.myApproval.push(apiMenuData.data[1].children[1].children[i].text);
-      }
-    }
-
-    if(!this.commonService.isEmptyObject(newData.data)){
-      this.summaryTask = newData.data;
-      this.summaryAssignmentTask = newData.data.filter(t => t.urai.includes('Assignment'));
-      this.summaryMyTask = newData.data.filter(t => t.urai.includes('Task'));
-      this.summaryRequest = newData.data.filter(t => t.urai.includes('Request'));
-      this.summaryFlagged = newData.data.filter(t => t.urai.includes('Flags'));
-      this.summaryCcTask = newData.data.filter(t => t.urai.includes('Approval'));
-
-      this.filterData();
-      // this.loadAssignment();
-      this.loadRiskSummary();
-    }
-  }
-
-  filterData(){
-    // summaryTask
-    if (this.summaryTask.length && this.summaryTask.length) {
-      this.summaryTask.forEach((item, index) => {
-        this.summaryTask[index].urai = item.urai.replace('My ', '').replace(' Assignment', '')
-      });
-      console.log('summaryTask', this.summaryAssignmentTask);
-    }
-
-    // summaryAssignmentTask
-    if (this.summaryAssignmentTask.length && this.summaryAssignmentTask.length) {
-      this.summaryAssignmentTask.forEach((item, index) => {
-        this.summaryAssignmentTask[index].urai = item.urai.replace('My ', '').replace(' Assignment', '')
-      });
-    }
-
-    // summaryMyTask
-    if (this.summaryMyTask.length && this.summaryMyTask.length) {
-      this.summaryMyTask.forEach((item, index) => {
-        this.summaryMyTask[index].urai = item.urai.replace('My ', '').replace(' Task', '')
-      });
-    }
-
-    // summaryRequest
-    if (this.summaryRequest.length && this.summaryRequest.length) {
-      this.summaryRequest.forEach((item, index) => {
-        this.summaryRequest[index].urai = item.urai.replace('My ', '').replace(' Request', '')
-      });
-    }
-
-    // summaryFlagged
-    if (this.summaryFlagged.length && this.summaryFlagged.length) {
-      this.summaryFlagged.forEach((item, index) => {
-        this.summaryFlagged[index].urai = item.urai.replace('My ', '').replace(' Flags', '')
-      });
-    }
-
-    // summaryCcTask
-    if (this.summaryCcTask.length && this.summaryCcTask.length) {
-      this.summaryCcTask.forEach((item, index) => {
-        this.summaryCcTask[index].urai = item.urai.replace('My ', '').replace(' Approval', '')
-      });
-    }
-  }
-
-  handleTopTask(item){
-    // console.log(item, 'handleTopTask')
-    if(item.text == 'Assignments') this.loadAssignment();
-    if(item.text == 'Group Tasks') this.loadGroupTask();
-    if(item.text == 'My Tasks') this.loadMyTask();
-    if(item.text == 'Request') this.loadRequestTask();
-    if(item.text == 'CC Tasks') this.loadCcTask();
-    if(item.text == 'Flagged Task') this.loadFlaggedTask();
+    fetch("../../assets/data/riskstatus.json").then(res=>res.json()).then(json=>{
+      this.summaryRiskStatus = json['data'];
+    });
   }
 
   handleShowAll(){
@@ -238,150 +120,6 @@ export class Tab1Page {
   loadRiskSummary(){
     this.chartTitle = 'Risk Rangking';
     this.counterActive = 'risk';
-  }
-
-  loadAssignment(){
-    this.chartTitle = 'Assignment';
-    this.counterActive = 'assignment';
-
-    if(!this.commonService.isEmptyObject(this.summaryAssignmentTask)) {
-      this.chartLabels = [];
-      this.chartData = [];
-      for ( let i=0; i<this.summaryAssignmentTask.length; i++ ) {
-        this.chartLabels[i] = this.summaryAssignmentTask[i].urai.replace('My ', '').replace(' Assignment', '');
-        this.chartData[i] = this.summaryAssignmentTask[i].value;
-      }
-    }
-
-    this.loadChart(); // reload chart
-
-  }
-
-  loadGroupTask() {
-    this.chartTitle = 'Group Task';
-    this.counterActive = 'grouptask';
-
-    this.chartLabels = [];
-    this.chartData = [];
-    for ( let i=0; i<this.summaryTask.length; i++ ) {
-      this.chartLabels[i] = this.summaryTask[i].urai.replace('My ', '').replace(' Assignment', '').replace(' Task', '').replace(' Request', '');
-      this.chartData[i] = this.summaryTask[i].value;
-    }
-    console.log(this.chartTitle, 'chartTitle')
-    // console.log(this.chartLabels, '119_chartLabels')
-    // console.log(this.chartData, '120_chartData')
-
-    this.loadChart(); // reload chart
-    // this.presentAction(this.chartTitle,this.groupTask,['flash','archive']);
-  }
-
-  loadMyTask() {
-    this.chartTitle = 'My Task';
-    this.counterActive = 'mytask';
-
-    this.chartLabels = [];
-    this.chartData = [];
-    for ( let i=0; i<this.summaryMyTask.length; i++ ) {
-      this.chartLabels[i] = this.summaryMyTask[i].urai.replace('My ', '').replace(' Task', '');
-      this.chartData[i] = this.summaryMyTask[i].value;
-    }
-    console.log(this.chartLabels, '119_chartLabels')
-    console.log(this.chartData, '120_chartData')
-
-    this.loadChart(); // reload chart
-    // this.presentAction(this.chartTitle,this.myTask,['document-text','flash','archive','repeat']);
-  }
-
-  loadRequestTask() {
-    this.chartTitle = 'Request';
-    this.counterActive = 'request';
-
-    this.chartLabels = [];
-    this.chartData = [];
-    for ( let i=0; i<this.summaryRequest.length; i++ ) {
-      this.chartLabels[i] = this.summaryRequest[i].urai.replace('My ', '').replace(' Request', '');
-      this.chartData[i] = this.summaryRequest[i].value;
-    }
-    console.log(this.chartLabels, '119_chartLabels')
-    console.log(this.chartData, '120_chartData')
-
-    this.loadChart(); // reload chart
-  }
-
-  loadCcTask() {
-    this.chartTitle = 'Task';
-    this.counterActive = 'cctask';
-
-    this.chartLabels = [];
-    this.chartData = [];
-    for ( let i=0; i<this.summaryCcTask.length; i++ ) {
-      this.chartLabels[i] = this.summaryCcTask[i].urai;
-      this.chartData[i] = this.summaryCcTask[i].value;
-    }
-    console.log(this.chartLabels, '119_chartLabels')
-    console.log(this.chartData, '120_chartData')
-
-    this.loadChart(); // reload chart
-  }
-
-  loadFlaggedTask() {
-    this.chartTitle = 'Flagged';
-    this.counterActive = 'flaggedtask';
-
-    this.chartLabels = [];
-    this.chartData = [];
-    for ( let i=0; i<this.summaryFlagged.length; i++ ) {
-      this.chartLabels[i] = this.summaryFlagged[i].urai;
-      this.chartData[i] = this.summaryFlagged[i].value;
-    }
-    console.log(this.chartLabels, '119_chartLabels')
-    console.log(this.chartData, '120_chartData')
-
-    this.loadChart(); // reload chart
-  }
-
-  loadMyRequest() {
-    // this.presentAction(this.chartTitle,this.myRequest,['document-text','flash','archive','repeat']);
-  }
-
-  loadChart(){
-    // console.log(this.showdoughnutCanvas, 'showdoughnutCanvas')
-  }
-
-  async getAssignmentsList(){
-    let loading = await this.loadingCtrl.create({
-      message: 'Data Loading ...'
-    });
-
-    await loading.present();
-
-    let params = {
-      start: 0,
-      limit: 10,
-      jenis: 'getTaskList',
-      vTitle: 11,
-      stsfilter: 3,
-      neefilter: '-55555',
-      norfilter: '-55555',
-      sorfilter: 'track_date DESC',
-      groupedby: 0,
-      filteredby: '-55555',
-    }
-
-    this.authService.getSelectTasks(params).subscribe((response) => {
-      loading.dismiss();
-      var newData = JSON.parse(JSON.stringify(response));
-      if(newData['success']==true){
-        this.summaryAssignmentTask = newData['data'];
-        console.log(this.summaryAssignmentTask, '94')
-      } else {
-        // this.commonService.alertErrorResponse(newData['msg']);
-      }
-    }, (error) => {
-      loading.dismiss();
-      console.log('Error: ', error.message)
-      this.commonService.alertErrorResponse(error.message);
-    });
   }
 
   async handleInputSearch(event) {
@@ -660,43 +398,6 @@ export class Tab1Page {
     this.topSegment = ev.detail.value;
     this.counterActive = ev.detail.value;
     console.log('Segment changed:', this.topSegment + ';' + this.counterActive);
-
-    if(this.topSegment == 'task') {
-      // this.getSummary();
-      this.loadAssignment();
-    }
-
-    if(this.topSegment == 'approval') {
-      this.getApprovalSummary();
-    }
-
-    if(this.topSegment == 'project') {
-      // project-assignor, project-leader, project-assignee
-      // this.getApprovalSummary();
-    }
-  }
-
-  async getApprovalSummary(){
-    let loading = await this.loadingCtrl.create({
-      message: 'Data Loading ...'
-    });
-
-    await loading.present();
-    this.authService.sumaryApprovalTask().subscribe((response) => {
-      loading.dismiss();
-      var newData = JSON.parse(JSON.stringify(response));
-      if(newData['data']){
-        this.summaryTask = newData['data'];
-        this.summaryRequest = newData['data'].filter(t => t.urai.includes('Request'));
-
-        this.loadRequestTask();
-      } else {
-        console.log(newData, '77_newData')
-      }
-    }, (error) => {
-      loading.dismiss();
-      console.log('Error: ', error.message)
-    });
   }
 
   convertToColor(item){

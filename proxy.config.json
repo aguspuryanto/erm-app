@@ -1,0 +1,7 @@
+{
+    "/workflow2": {
+        "target": "http://fts.dxn2u.com:8282",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}

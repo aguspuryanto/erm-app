@@ -65,6 +65,10 @@ const routes: Routes = [
   {
     path: 'priority',
     loadChildren: () => import('./pages/priority/priority.module').then( m => m.PriorityPageModule)
+  },
+  {
+    path: 'pass-recovery',
+    loadChildren: () => import('./pages/pass-recovery/pass-recovery.module').then( m => m.PassRecoveryPageModule)
   }
 ];
 @NgModule({

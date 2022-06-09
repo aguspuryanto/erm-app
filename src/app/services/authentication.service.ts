@@ -12,6 +12,7 @@ import { Platform } from '@ionic/angular';
 const TOKEN_KEY = CONFIGURATION.TOKEN_KEY;
 const DATA_KEY = CONFIGURATION.DATA_KEY;
 const API_SITE = CONFIGURATION.apiEndpoint;
+const WEBAPI_SITE = CONFIGURATION.webapiEndpoint;
 
 @Injectable({
   providedIn: 'root'
@@ -44,11 +45,9 @@ export class AuthenticationService {
 
   async loadToken() {
       const token = await Storage.get({key: TOKEN_KEY});
-      const keyOfData = await Storage.get({key: DATA_KEY});
-      if (token && token.value) {
-          console.log(token.value, '53_auth_loadToken');
-          this.token = token.value;
-          this.keyOfData = JSON.parse(keyOfData.value);
+    //   const keyOfData = await Storage.get({key: DATA_KEY});
+    //   console.log('token=' + token.value + ';keyOfData=' + JSON.stringify(keyOfData.value));
+      if (token.value) {
           this.isAuthenticated.next(true);
       } else {
           this.isAuthenticated.next(false);
@@ -682,5 +681,32 @@ export class AuthenticationService {
           },
       }).then((response) => response.data)
       return dataPromise
+  }
+
+  webLogin(params) {
+    const httpOptions = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http.post(`${WEBAPI_SITE}/restapi/user/signin`, params).pipe(
+        map((data: any) => {
+            return data;
+        }),
+        tap({
+            next: (data) => {
+                console.log('next:', data.data.authtoken)
+                if (data.isSuccess == true) {
+                    Storage.set({key: DATA_KEY, value: data.data});
+                    Storage.set({key: TOKEN_KEY, value: data.data.authtoken});
+                    this.isAuthenticated.next(true);
+                } else {
+                    Storage.remove({key: DATA_KEY});
+                    Storage.remove({key: TOKEN_KEY});
+                    this.isAuthenticated.next(false);
+                }
+            },
+            error: (error) => console.log(error)
+        })
+    )
   }
 }

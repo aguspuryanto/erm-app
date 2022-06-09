@@ -1,0 +1,30 @@
+{
+    "totalRecord": "0",
+    "data": [
+        {
+            "urut": "1",
+            "urai": "Catasthropic",
+            "value": "1"
+        },
+        {
+            "urut": "2",
+            "urai": "Major",
+            "value": "0"
+        },
+        {
+            "urut": "3",
+            "urai": "Moderate",
+            "value": "2"
+        },
+        {
+            "urut": "4",
+            "urai": "Minor",
+            "value": "1"
+        },
+        {
+            "urut": "5",
+            "urai": "Insignificant",
+            "value": "0"
+        }
+    ]
+}

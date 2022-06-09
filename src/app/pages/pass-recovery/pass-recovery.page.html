@@ -1,0 +1,52 @@
+<ion-header [translucent]="false" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Forgot Password</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="wrapper-app ion-padding">
+    <form (ngSubmit)="resetPass()" [formGroup]="credentials">
+      <ion-item lines="none">
+        <div color="dark"  slot="start">
+          <ion-icon slot="icon-only" name="person" ></ion-icon>
+        </div>
+        <ion-input type="text" placeholder="User Name" formControlName="username"></ion-input>
+      </ion-item>
+      <div *ngIf="(username.dirty || username.touched) && username.errors" class="errors">
+        <span *ngIf="username.errors?.required">User Name is required</span>
+        <span *ngIf="username.errors?.username">User Name is invalid</span>
+      </div>
+      <ion-item lines="none">
+        <div color="dark"  slot="start">
+          <ion-icon slot="icon-only" name="mail" ></ion-icon>
+        </div>
+        <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+      </ion-item>
+      <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
+        <span *ngIf="email.errors?.required">Email is required</span>
+        <span *ngIf="email.errors?.email">Email is invalid</span>
+      </div>
+      <ion-item lines="none">
+        <div color="dark"  slot="start">
+          <ion-icon slot="icon-only" name="mail-unread" ></ion-icon>
+        </div>
+        <ion-input type="email" placeholder="Verify Email" formControlName="email2"></ion-input>
+      </ion-item>
+      <div *ngIf="(email2.dirty || email2.touched) && email2.errors" class="errors">
+        <span *ngIf="email2.errors?.required">Verify Email is required</span>
+        <span *ngIf="email2.errors?.email2">Verify Email is invalid</span>
+      </div>
+    
+      <div class="ion-text-center">
+        <ion-button type="submit" expand="full" shape="round" color="primary" [disabled]="!credentials.valid">SEND</ion-button>
+        <!-- <p class="ion-text-left">
+          <a routerLink="/contact-admin" routerDirection="back">Contact Admin</a>
+        </p> -->
+      </div>
+    </form>
+  </div>
+</ion-content>

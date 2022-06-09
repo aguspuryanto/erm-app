@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ERMApp</string>
+    <string name="title_activity_main">ERMApp</string>
+    <string name="package_name">com.dxn2u.erm</string>
+    <string name="custom_url_scheme">com.dxn2u.erm</string>
+</resources>
