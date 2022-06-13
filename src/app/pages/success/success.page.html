@@ -1,0 +1,29 @@
+<ion-header [translucent]="false" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/pass-recovery"></ion-back-button>
+    </ion-buttons>
+    <!-- <ion-title>detail-modal</ion-title> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">  
+  <div class="Rectangle4">
+    <div class="Rectangle3">
+      <!-- fab placed to the top end -->
+      <ion-fab vertical="top" horizontal="end" slot="fixed">
+        <ion-fab-button color="danger" [disabled]="true">
+          <ion-icon name="checkmark-done-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+      <div class="ion-text-center">
+        <h1>SUCCESS!</h1>
+        <p>{{msg}}</p>
+        <ion-button (click)="goBack()" expand="block" fill="outline">OK</ion-button>
+      </div>
+      <p class="ion-text-left">
+        <a class="ion-text-left" routerLink="/contact-admin" routerDirection="back">Contact Admin</a>
+      </p> 
+    </div>
+  </div>
+</ion-content>

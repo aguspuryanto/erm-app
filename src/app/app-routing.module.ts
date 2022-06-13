@@ -77,6 +77,10 @@ const routes: Routes = [
   {
     path: 'category-modal',
     loadChildren: () => import('./pages/category-modal/category-modal.module').then( m => m.CategoryModalPageModule)
+  },
+  {
+    path: 'success',
+    loadChildren: () => import('./pages/success/success.module').then( m => m.SuccessPageModule)
   }
 ];
 @NgModule({
