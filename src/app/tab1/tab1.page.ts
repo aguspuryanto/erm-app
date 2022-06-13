@@ -114,7 +114,7 @@ export class Tab1Page {
         task_type: this.counterActive
       }
     };
-    this.router.navigate(['/detail-all'], navigationExtras);
+    this.router.navigate(['/detail']);
   }
 
   loadRiskSummary(){
@@ -164,10 +164,6 @@ export class Tab1Page {
   async onCancel(event) {
     // this.searchText = event.target.value;
   }
-
-  // async handleAssignmentTask(item){
-  //   console.log(item, 'handleAssignmentTask')
-  // }
 
   async handleAssignmentTask(item){
     console.log(item, 'handleAssignmentTask')
@@ -269,10 +265,6 @@ export class Tab1Page {
       filteredby: '-55555',
     }
 
-    // stsfilter = 1 View All, 2 Unassigned, 3 Active, 4 Overdue, 5 Completed, 6 Closed (Active CC Task)
-    // stsfilter = 1 View All, 9 Archiver, 8 Canceled (Archieve CC Task)
-    // stsfilter = 10 View All, 11 Active, 12 Overdue, 13 Rejected, 14 RMI (CC Request)
-
     // Active
     if(item=='Active'){
       params['stsfilter'] = 3
@@ -319,12 +311,6 @@ export class Tab1Page {
     this.goPageDetail(item, params);
   }
 
-  // handleFlaggedTaskCounter(item){
-  //   console.log(item, 'handleFlaggedTaskCounter')
-  //   if(!item.value || item.value == '0') return;
-  //   // redirect search page
-  // }
-
   // Handle Popover
   async handleMyRequest(item){
     console.log(item, 'handleMyRequest')
@@ -353,39 +339,40 @@ export class Tab1Page {
   }
 
   async goPageDetail(item, params){
-    console.log(this.commonService.isEmptyObject(item), '713_goPageDetail')
-    if(this.commonService.isEmptyObject(item)){
-      this.storageValue['title'] = item;
-    } else {
-      this.storageValue['title'] = 'My ' + item.urai + ' Tasks';
-    }
-    this.storageValue['params'] = params;
+    console.log(params, '342_params');
+    this.router.navigate(['/detail']);
+    // if(this.commonService.isEmptyObject(item)){
+    //   this.storageValue['title'] = item;
+    // } else {
+    //   this.storageValue['title'] = 'My ' + item.urai + ' Tasks';
+    // }
+    // this.storageValue['params'] = params;
 
-    let loading = await this.loadingCtrl.create({
-      message: 'Data Loading ...'
-    });
+    // let loading = await this.loadingCtrl.create({
+    //   message: 'Data Loading ...'
+    // });
 
-    await loading.present();
-    this.authService.getSelectTasks(params).subscribe((response) => {
-      loading.dismiss();
-      var newData = JSON.parse(JSON.stringify(response));
-      if(newData['success']==true){
-        this.storageValue['data'] = newData['data'];
-        console.log(this.storageValue, 'storageValue')
+    // await loading.present();
+    // this.authService.getSelectTasks(params).subscribe((response) => {
+    //   loading.dismiss();
+    //   var newData = JSON.parse(JSON.stringify(response));
+    //   if(newData['success']==true){
+    //     this.storageValue['data'] = newData['data'];
+    //     console.log(this.storageValue, 'storageValue')
 
-        this.commonService.removelocalStorageItem('tempdata');
-        this.commonService.setlocalStorageObject('tempdata', this.storageValue)
+    //     this.commonService.removelocalStorageItem('tempdata');
+    //     this.commonService.setlocalStorageObject('tempdata', this.storageValue)
 
-        const urlwithParams = 'detail/' + this.counterActive + '/' + params['stsfilter'];
-        this.router.navigateByUrl(urlwithParams)
-      } else {
-        this.commonService.alertErrorResponse(newData['msg']);
-      }
-    }, (error) => {
-      loading.dismiss();
-      console.log('Error: ', error.message)
-      this.commonService.alertErrorResponse(error.message);
-    });
+    //     const urlwithParams = 'detail/' + this.counterActive + '/' + params['stsfilter'];
+    //     this.router.navigateByUrl(urlwithParams)
+    //   } else {
+    //     this.commonService.alertErrorResponse(newData['msg']);
+    //   }
+    // }, (error) => {
+    //   loading.dismiss();
+    //   console.log('Error: ', error.message)
+    //   this.commonService.alertErrorResponse(error.message);
+    // });
   }
 
   handleMyApproval(item){

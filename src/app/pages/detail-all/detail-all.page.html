@@ -15,7 +15,6 @@
 
 <ion-content class="ion-padding" [fullscreen]="true">
   <div class="recentSearches" *ngIf="!commonService.isEmptyObject(recentSearches);else recentNo">
-    <h2 class="ion-text-right">{{topTitle}}</h2>
     <ion-card *ngFor="let item of recentSearches">
       <ion-item class="ion-no-padding">
         <ion-label class="ion-text-wrap">

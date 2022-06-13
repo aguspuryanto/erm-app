@@ -26,7 +26,7 @@ export class DetailPage implements OnInit {
   params: any = []
   dataArra: any = []
   dataArraTot: number = 0
-  topTitle = 'Active Task';
+  topTitle = 'Risk';
   storageValue: any = {};
   
   task_type = '';
@@ -50,24 +50,7 @@ export class DetailPage implements OnInit {
   }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      console.log(params, 'params')
-      // this.task_type = params.get('cat')
-      // console.log(this.task_type, 'task_type')
-    });
-
-    // const tempdata = this.commonService.getlocalStorageObject('tempdata');
-    // if(!this.commonService.isEmptyObject(tempdata)){
-    //   tempdata.then((data: any) => {
-    //     console.log(data, 'data')
-    //     this.params = data.params;
-    //     this.dataArra = data.data;
-    //     this.topTitle = data.title;
-    //     this.recentSearches = data.data;
-    //     console.log(this.dataArra, 'dataArra')
-    //   });
-    // }
-    
+    // 
   }
 
   ngOnDestroy() {
@@ -78,111 +61,12 @@ export class DetailPage implements OnInit {
     // this.fetchMoreListing();
     this.getSummary();
   }
-
-  groupTask: any = [];
-  myTask: any = [];
-  myAssignments: any = [];
-  myRequest: any = [];
-  myCCTask: any = [];
-  flaggedTask: any = [];
   
   async getSummary(){
-    const apiMenu = this.commonService.getlocalStorageObject('apimenuData');
-    apiMenu.then((data: any) => {
-      // console.log(data, 'data');
-      this.olahData(data);
+    fetch("../../assets/data/priorityArray.json").then(res=>res.json()).then(json=>{
+      this.recentSearches = json;
     });
-    
-    this.getTaskList();
   };
-
-  olahData(data){
-    const apiMenuData = data[0];
-    const newData = data[1];
-    
-    if(this.commonService.isEmptyObject(apiMenuData.data)){
-      console.log(apiMenuData.msg,'')
-      // this.router.navigateByUrl('/login', { replaceUrl: true });
-      
-    } else {
-      // groupTask
-      this.groupTask = []
-      for(let i=0; i<apiMenuData.data[1].children[0].children.length; i++) {
-        this.groupTask.push(apiMenuData.data[1].children[0].children[i].text);
-      }
-
-      // myTask
-      this.myTask = []
-      for(let i=0; i<apiMenuData.data[1].children[1].children.length; i++) {
-        this.myTask.push(apiMenuData.data[1].children[1].children[i].text);
-      }
-
-      // My Assignments
-      this.myAssignments = []
-      for(let i=0; i<apiMenuData.data[1].children[2].children.length; i++) {
-        this.myAssignments.push(apiMenuData.data[1].children[2].children[i].text);
-      }
-
-      // myRequest
-      this.myRequest = []
-      for(let i=0; i<apiMenuData.data[1].children[3].children.length; i++) {
-        this.myRequest.push(apiMenuData.data[1].children[3].children[i].text);
-      }
-
-      // CC Tasks
-      this.myCCTask = []
-      for(let i=0; i<apiMenuData.data[1].children[4].children.length; i++) {
-        this.myCCTask.push(apiMenuData.data[1].children[4].children[i].text);
-      }
-
-      // Flagged Task
-      this.flaggedTask = []
-      for(let i=0; i<apiMenuData.data[1].children[5].children.length; i++) {
-        this.flaggedTask.push(apiMenuData.data[1].children[5].children[i].text);
-      }
-    }
-  }
-  
-  async getTaskList(){
-    let loading = await this.loadingCtrl.create({
-      message: 'Data Loading ...'
-    });
-
-    await loading.present();
-
-    let params = {
-      start: 0,
-      limit: 10,
-      jenis: 'getTaskList',
-      vTitle: this.getTaskId(),
-      stsfilter: 1, //View All
-      neefilter: '-55555',
-      norfilter: '-55555',
-      sorfilter: 'track_date DESC',
-      groupedby: 0,
-      filteredby: '-55555',
-    }
-    
-    const taskList = this.authService.getSelectTasks(params);
-    forkJoin([taskList]).subscribe(data => {
-      loading.dismiss();
-      const listArr = JSON.parse(JSON.stringify(data[0].data));
-      console.log(listArr, 'listArr');
-      this.recentSearches = listArr;
-      
-    }, (error) => {
-      loading.dismiss();
-      console.log(error);
-      this.commonService.alertErrorResponse(error.message);
-    });
-  }
-
-  getTaskId(){
-    console.log(this.task_type, '')
-    if(typeof this.task_type == 'undefined' || this.commonService.isEmpty(this.task_type)) this.task_type = '17';
-
-    return this.task_type;
-  }
 
   async fetchMoreListing(){
     let params = this.params;
@@ -350,36 +234,8 @@ export class DetailPage implements OnInit {
   
   menuPopover:any = []
   handleOpenmenu(){
-    console.log(this.task_type, 'task_type')
-    if(this.task_type == 'mytask') {
-      console.log(this.myTask, 'myTask')
-      this.presentAction('',this.myTask,['document-text','flash','archive','repeat']);
-    }
-
-    if(this.task_type == 'grouptask') {
-      this.presentAction('',this.groupTask,['document-text','flash','archive','repeat']);
-    }
-
-    if(this.task_type == 'request') {
-      this.presentAction('',this.myRequest,['document-text','flash','archive','repeat']);
-    }
-
-    if(this.task_type == 'flaggedtask') {
-      this.presentAction('',this.flaggedTask,['document-text','flash','archive','repeat']);
-    }
-
-    // const itemButton = this.menuPopover.reduce(function(acc, item){
-    //   if(item.mn_text) acc.push(item.mn_text)
-    //   return acc;
-    // }, []);
-    
-    // const itemIcon = this.menuPopover.reduce(function(acc, item){
-    //   if(item.mn_icon) acc.push(item.mn_icon)
-    //   return acc;
-    // }, []);
-    // console.log(itemButton, 'itemButton')
-
-    // this.presentAction(this.topTitle, itemButton, itemIcon);
+    // console.log(this.task_type, 'task_type')
+    this.router.navigateByUrl('/new-task', { replaceUrl: true });
   }
 
   async presentAction(title:string,itemButton:any,icon:any) {

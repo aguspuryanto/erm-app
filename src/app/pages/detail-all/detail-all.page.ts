@@ -51,53 +51,8 @@ export class DetailAllPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.headerTitle = this.commonService.getTitleApp();
-    const apiMenu = this.commonService.getlocalStorageObject('apimenuData');
-    apiMenu.then((data: any) => {
-      console.log(data, 'data');
-      // this.olahData(data[0], data[1]);
-      const apiMenuData = data[0];
-      console.log(apiMenuData.data, 'apiMenuData');
-
-      if(!this.commonService.isEmptyObject(apiMenuData.data)){
-        // groupTask
-        this.groupTask = []
-        for(let i=0; i<apiMenuData.data[1].children[0].children.length; i++) {
-          this.groupTask.push(apiMenuData.data[1].children[0].children[i].text);
-        }
-
-        // myTask
-        this.myTask = []
-        for(let i=0; i<apiMenuData.data[1].children[1].children.length; i++) {
-          this.myTask.push(apiMenuData.data[1].children[1].children[i].text);
-        }
-
-        // My Assignments
-        this.myAssignments = []
-        for(let i=0; i<apiMenuData.data[1].children[2].children.length; i++) {
-          this.myAssignments.push(apiMenuData.data[1].children[2].children[i].text);
-        }
-
-        // myRequest
-        this.myRequest = []
-        for(let i=0; i<apiMenuData.data[1].children[3].children.length; i++) {
-          this.myRequest.push(apiMenuData.data[1].children[3].children[i].text);
-        }
-
-        // CC Tasks
-        this.myCCTask = []
-        for(let i=0; i<apiMenuData.data[1].children[4].children.length; i++) {
-          this.myCCTask.push(apiMenuData.data[1].children[4].children[i].text);
-        }
-
-        // Flagged Task
-        this.flaggedTask = []
-        for(let i=0; i<apiMenuData.data[1].children[5].children.length; i++) {
-          this.flaggedTask.push(apiMenuData.data[1].children[5].children[i].text);
-        }
-      }
-
-    });
+    this.headerTitle = this.commonService.getTitleApp();    
+    this.getTaskList();
   }
 
   showNotifications(){
@@ -113,39 +68,13 @@ export class DetailAllPage implements OnInit {
   flaggedTask: any = [];
   
   async getTaskList(){
-    let loading = await this.loadingCtrl.create({
-      message: 'Data Loading ...'
-    });
+    // let loading = await this.loadingCtrl.create({
+    //   message: 'Data Loading ...'
+    // });
 
-    await loading.present();
-
-    let params = {
-      start: 0,
-      limit: 10,
-      jenis: 'getTaskList',
-      vTitle: this.getTaskId(),
-      stsfilter: 1, //View All
-      neefilter: '-55555',
-      norfilter: '-55555',
-      sorfilter: 'track_date DESC',
-      groupedby: 0,
-      filteredby: '-55555',
-    }
-
-    // const apiMenu = this.authService.getAPIMenu();
-    // const sumaryTask = this.authService.sumaryTask();
-    const taskList = this.authService.getSelectTasks(params);
-
-    forkJoin([taskList]).subscribe(data => {
-      loading.dismiss();
-      const listArr = JSON.parse(JSON.stringify(data[0].data));
-      console.log(listArr, 'listArr');
-      this.recentSearches = listArr;
-      
-    }, (error) => {
-      loading.dismiss();
-      console.log(error);
-      this.commonService.alertErrorResponse(error.message);
+    // await loading.present();
+    fetch("../../assets/data/priorityArray.json").then(res=>res.json()).then(json=>{
+      this.recentSearches = json;
     });
   }
 

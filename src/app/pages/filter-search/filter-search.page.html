@@ -33,7 +33,7 @@
         <ion-item lines="none">
           <ion-label position="stacked">Search By</ion-label>
           <ion-select placeholder="Select One" [(ngModel)]="filterSearch.searchby" (ionChange)="onChangeSearhBy($event)">
-            <ion-select-option value="f">Female</ion-select-option>
+            <ion-select-option *ngFor="let val of listSearchBy" [value]="val">{{ val }}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item lines="none">
@@ -43,13 +43,13 @@
         <ion-item lines="none">
           <ion-label position="stacked">Status</ion-label>
           <ion-select placeholder="Select One" [(ngModel)]="filterSearch.status" (ionChange)="onChangeStatus($event)">
-            <ion-select-option value="f">Female</ion-select-option>
+            <ion-select-option *ngFor="let val of listStatus" [value]="val">{{ val }}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-list>
     </div>
     <div class="section-action ion-padding">
-      <ion-button (click)="back()" color="secondary">Reset</ion-button>
+      <ion-button (click)="resetFilter()" color="secondary">Reset</ion-button>
       <ion-button (click)="applyFilter()">Apply</ion-button>
     </div>
   </div>

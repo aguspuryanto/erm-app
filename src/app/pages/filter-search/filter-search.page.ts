@@ -26,12 +26,15 @@ export class FilterSearchPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.getTaskList()
+    // this.getTaskList()
   }
   
   listAssignor: any = []
   listAssignee: any = []
   listGroup: any = []
+  listSearchBy: any = []
+  listStatus: any = []
+
   async getTaskList(){
     this.listGroup = this.getGroupArr();
     let loading = await this.loadingCtrl.create({
@@ -108,8 +111,8 @@ export class FilterSearchPage implements OnInit {
     this.filterSearch = {...this.filterSearch, ...{status: event.target.value}}
   }
 
-  back() {
-
+  resetFilter() {
+    this.filterSearch = []
   }
 
   closeModal() {

@@ -23,9 +23,6 @@ export class DetailCommentPage implements OnInit {
     console.log(this.item, 'item')
   }
 
-  showNotifications(){
-  }
-
   closeModal() {
     this.modalCtrl.dismiss({
       'dismissed': true

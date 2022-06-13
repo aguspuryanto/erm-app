@@ -7,7 +7,7 @@
       {{ title | date :  "MMMM, d" }}
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="showNotifications()">
+      <ion-button [routerLink]="['/notification']">
         <ion-badge color="warning">3</ion-badge>
         <ion-icon name="notifications-outline"></ion-icon>
       </ion-button>

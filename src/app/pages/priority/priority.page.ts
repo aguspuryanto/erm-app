@@ -79,8 +79,8 @@ export class PriorityPage implements OnInit {
   };
 
   olahData(data){
-    const apiMenuData = data[0];
-    const newData = data[1];
+    // const apiMenuData = data[0];
+    // const newData = data[1];
     fetch("../../assets/data/priorityArray.json").then(res=>res.json()).then(json=>{
       this.recentSearches = json;
     });

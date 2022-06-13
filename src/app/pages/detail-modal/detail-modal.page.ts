@@ -73,7 +73,7 @@ export class DetailModalPage implements OnInit {
       console.log(data, '60_getListAction')
       // console.log(data[0].message, 'message')
       if(!data[0].success) {
-        this.commonService.alertErrorResponse(data[0].message);
+        // this.commonService.alertErrorResponse(data[0].message);
 
       } else {
         const listActionArr = JSON.parse(JSON.stringify(data[0].data));
@@ -132,7 +132,7 @@ export class DetailModalPage implements OnInit {
     }, []);
     // console.log(itemButton, 'itemButton')
 
-    this.presentAction(this.topTitle, itemButton, itemIcon);
+    // this.presentAction(this.topTitle, itemButton, itemIcon);
   }
 
   async presentAction(title:string,itemButton:any,icon:any) {

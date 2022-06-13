@@ -69,6 +69,14 @@ const routes: Routes = [
   {
     path: 'pass-recovery',
     loadChildren: () => import('./pages/pass-recovery/pass-recovery.module').then( m => m.PassRecoveryPageModule)
+  },
+  {
+    path: 'new-task',
+    loadChildren: () => import('./pages/new-task/new-task.module').then( m => m.NewTaskPageModule)
+  },
+  {
+    path: 'category-modal',
+    loadChildren: () => import('./pages/category-modal/category-modal.module').then( m => m.CategoryModalPageModule)
   }
 ];
 @NgModule({
