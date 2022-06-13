@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonRouterOutlet, LoadingController, ModalController } from '@ionic/angular';
+import { IonRouterOutlet, IonSlides, LoadingController, ModalController } from '@ionic/angular';
 import { forkJoin } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CommonService } from 'src/app/services/common.service';
@@ -13,6 +13,8 @@ import { CategoryModalPage } from '../category-modal/category-modal.page';
   styleUrls: ['./new-task.page.scss'],
 })
 export class NewTaskPage implements OnInit {
+  @ViewChild('mySlider', { static: true })  slides: IonSlides;
+  
   newTaskForm: FormGroup;
 
   priorityArr: any = []
@@ -22,14 +24,16 @@ export class NewTaskPage implements OnInit {
   deptArr: any = []
   categoryArr: any = []
   topicArr: any = []
-
   userPref: any = []
 
-  date: any;
-  dateValue2 = '';
-
+  currentValue = 1;
   taskId: string = 'MKTG_SEA_MYS_002';
   topTitle = 'Register New Risk';
+
+  slideOpts = {
+    initialSlide: 0,
+    speed: 400
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -52,7 +56,14 @@ export class NewTaskPage implements OnInit {
       txtduedate: ['', [Validators.required]],
       txtestdate: ['', [Validators.required]],
       txttitle: ['', [Validators.required]],
-      txtdesc: ['', [Validators.required]],
+      txtevent: [''],
+      txtcause: [''],
+      txtconsequences: [''],
+      txtriskcat: [''],
+      txtriskowner: [''],
+      txtriskimpact: [''],
+      txtrisklikelihood: [''],
+      txtdesc: [''],
       txtassignee: [''],
       txtfullname: [''],
       txtcc: [''],
@@ -135,9 +146,9 @@ export class NewTaskPage implements OnInit {
       loading.dismiss();
       // console.log(response, '39_taskid') //false||Session Expired
       let respArray = response.split('||')
-      console.log(respArray, '68_taskid')
+      // console.log(respArray, '68_taskid')
       if(respArray[0]=='false') {
-        this.commonService.alertErrorResponse(respArray[1]);
+        // this.commonService.alertErrorResponse(respArray[1]);
       } else {
         this.taskId = respArray[1]
         console.log(this.taskId, 'taskId')
@@ -218,7 +229,6 @@ export class NewTaskPage implements OnInit {
     });
   }
   
-  currentValue = 1;
   setValue($event: Event): void {
     this.currentValue = parseInt(($event.target as HTMLInputElement).value, 10);
   }
@@ -333,6 +343,23 @@ export class NewTaskPage implements OnInit {
   doInfinite(event) {
     console.log('Done');
     event.target.complete();
+  }
+
+  slideChanged(e: any) {
+    this.slides.getActiveIndex().then((index: number) => {
+      console.log(index);
+      this.currentValue = index+1;
+    });
+  }
+
+  slidePrev(){
+    this.currentValue--;
+    this.slides.slidePrev();
+  }
+
+  slideNext(){
+    this.currentValue++;
+    this.slides.slideNext();
   }
 
 }
