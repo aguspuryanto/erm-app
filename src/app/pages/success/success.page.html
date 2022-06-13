@@ -1,29 +1,20 @@
-<ion-header [translucent]="false" class="ion-no-border">
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button text="" defaultHref="/pass-recovery"></ion-back-button>
-    </ion-buttons>
-    <!-- <ion-title>detail-modal</ion-title> -->
+    <!-- <ion-title>task-success</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">  
-  <div class="Rectangle4">
-    <div class="Rectangle3">
-      <!-- fab placed to the top end -->
-      <ion-fab vertical="top" horizontal="end" slot="fixed">
-        <ion-fab-button color="danger" [disabled]="true">
-          <ion-icon name="checkmark-done-outline"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-      <div class="ion-text-center">
-        <h1>SUCCESS!</h1>
-        <p>{{msg}}</p>
-        <ion-button (click)="goBack()" expand="block" fill="outline">OK</ion-button>
+<ion-content [fullscreen]="true">
+  <div class="wrapper-payment-success ion-padding">
+    <div class="content-area">
+      <div class="icon">
+        <img src="../../../../assets/icon-action-success.svg" alt="">
       </div>
-      <p class="ion-text-left">
-        <a class="ion-text-left" routerLink="/contact-admin" routerDirection="back">Contact Admin</a>
-      </p> 
+      <h1>Success</h1>
+      <p>{{ textMsg }}</p>
+    </div>
+    <div class="section-action ion-padding">
+      <ion-button (click)="back()">Done</ion-button>
     </div>
   </div>
 </ion-content>

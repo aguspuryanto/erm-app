@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-success',
@@ -6,15 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./task-success.page.scss'],
 })
 export class TaskSuccessPage implements OnInit {
+  textMsg ='New Risk has been registered successfully';
+  updateMsg ='Risk data has been updated successfully ';
 
-  textMsg ='New Task has been created successfully';
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
 
   back() {
-    // this.router.navigateByUrl('/e-clinic/vaccination', {replaceUrl: true})
+    this.router.navigateByUrl('/tabs', {replaceUrl: true})
   }
 
 }

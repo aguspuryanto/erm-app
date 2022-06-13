@@ -358,8 +358,13 @@ export class NewTaskPage implements OnInit {
   }
 
   slideNext(){
-    this.currentValue++;
-    this.slides.slideNext();
+    if(this.currentValue == 4) {
+      // submit
+      this.router.navigateByUrl('/task-success', { replaceUrl: true });
+    } else {
+      this.currentValue++;
+      this.slides.slideNext();
+    }
   }
 
 }
