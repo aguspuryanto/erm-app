@@ -18,6 +18,7 @@ export class DetailModalPage implements OnInit {
   
   // The `ion-modal` element reference.
   modal: HTMLElement;
+  params:any = []
   item:any = []
   
   menuPopover:any = []
@@ -40,8 +41,8 @@ export class DetailModalPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.item = this.navParams.get('item');
-    console.log(this.item, '44_');
+    this.params = this.navParams.get('item');
+    console.log(this.params, '44_');
   }
 
   ionViewDidEnter() {
@@ -54,11 +55,13 @@ export class DetailModalPage implements OnInit {
     });
 
     await loading.present();
-    const sumaryRisk = this.authService.infoRisk(this.item);
+    const sumaryRisk = this.authService.infoRisk(this.params);
     forkJoin([sumaryRisk]).subscribe(data => {
       loading.dismiss();
       console.log(data, '59_');
-      this.item = data[0].data;
+      this.item = data[0].data[0];
+      this.item.residual = data[0].residual;
+      this.item.action_plan = data[0].action_plan;
     }, (error) => {
       loading.dismiss();
       console.log(error);

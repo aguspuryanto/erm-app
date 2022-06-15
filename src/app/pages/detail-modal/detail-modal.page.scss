@@ -22,6 +22,7 @@ ion-content {
             }
 
             ion-label {
+                font-size: 12px;
                 padding-left: 10px;
                 ion-text span {
                     font-weight: 700;
@@ -44,6 +45,14 @@ ion-content {
     
     .list-history h4 {
         color: #4E4E4E;
+    }
+    
+    .existing-risk {
+        display: block;
+        ion-badge {
+            width: 84px;
+            font-size: 40px;
+        }
     }
 }
 
