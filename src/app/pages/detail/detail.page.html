@@ -68,7 +68,7 @@
             <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M2.125 19.625H0.75V0.375H17.25L13.2625 6.5625L17.25 12.75H2.125V19.625Z" fill="#2DD36F"/>
             </svg>              
-            <ion-label>Risk Status : <ion-text color="danger">
+            <ion-label>Risk Status : <ion-text [ngStyle]="{'color': item.status_color}">
               <span class="ion-text-uppercase">{{ item.status_name }}</span>
             </ion-text></ion-label>
           </ion-item>
