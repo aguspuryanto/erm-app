@@ -21,7 +21,7 @@ export class DetailModalPage implements OnInit {
   item:any = []
   
   menuPopover:any = []
-  segmentDetailselected = 1;
+  segmentDetailselected:number = 1;
   segmentDetailMenu: any = ['Risk Approval','Risk Identification','Existing Risk Assessment','Risk Control','Residual Risk Assessment','Risk Action Plan'];
 
   constructor(
