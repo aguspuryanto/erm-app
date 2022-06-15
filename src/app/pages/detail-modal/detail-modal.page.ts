@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PopoverController, ActionSheetController, LoadingController, ModalController, NavParams, Platform } from '@ionic/angular';
+import { PopoverController, ActionSheetController, LoadingController, ModalController, NavParams, Platform, IonRouterOutlet } from '@ionic/angular';
 import { forkJoin } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CommonService } from 'src/app/services/common.service';
 
 import { File } from '@awesome-cordova-plugins/file/ngx';
 import { DocumentViewer } from '@awesome-cordova-plugins/document-viewer/ngx';
+import { RiskUpdatePage } from '../risk-update/risk-update.page';
 
 @Component({
   selector: 'app-detail-modal',
@@ -76,12 +77,28 @@ export class DetailModalPage implements OnInit {
 
   segmentChanged(ev: any) {
     console.log('Segment changed:', ev.detail.value);
-    // this.segmentDetailselected = ev.detail.value;
+    this.segmentDetailselected = ev.detail.value;
+  }
 
+  async handleRiskupdate(item){
+    console.log(item, '85_handleRiskupdate');
+    const modal = await this.modalController.create({
+      component: RiskUpdatePage,
+      cssClass: 'my-custom-class',
+      swipeToClose: true,
+      // presentingElement: this.routerOutlet.nativeEl,
+      componentProps: { item: item }
+    });
+
+    modal.onDidDismiss().then(dataReturned => {
+      console.log('DetailCommentPage return :' + JSON.stringify(dataReturned));
+    });
+
+    return await modal.present();
   }
 
   handleOpenmenu(item){
-    console.log(item, '111_handleOpenmenu')
+    console.log(item, '87_handleOpenmenu')
     const itemButton = this.menuPopover.reduce(function(acc, item){
       if(item.mn_text) acc.push(item.mn_text)
       return acc;
@@ -127,50 +144,10 @@ export class DetailModalPage implements OnInit {
   convertformatDate(date:string) {
     const newdate = date.match(/\S+/g).splice(0, 3);
     return newdate.join(' ');
-    // return this.commonService.formatDate(newdate.join(' '));
   }
 
   handlepresentAction(val){
     console.log(val, '153_handlepresentAction')
-    // 'edit', 'update', 'comment', 'flag', 'print'
-    if (val=="edit"){
-      this.closeModal();
-      this.router.navigate(['/edit-task'], { queryParams: { track_id: this.item.track_id } });
-      return;
-    }
-
-    if (val=="update"){
-      this.closeModal();
-      // this.router.navigate(['/edit-task'], { queryParams: { track_id: this.item.track_id } });
-      return;
-    }
-
-    if (val=="comment"){
-      this.closeModal();
-      // this.router.navigate(['/detail-comment'], { queryParams: { track_id: this.item.track_id } });
-      return;
-    }
-
-    if (val=="flag"){
-      // this.closeModal();
-      // this.router.navigate(['/detail-flag'], { queryParams: { track_id: this.item.track_id } });
-      return;
-    }
-
-    if (val=="print"){
-      this.closeModal();
-      const downloadPath = (this.platform.is('android')) ? this.file.externalDataDirectory : this.file.documentsDirectory;
-      
-      let tid = this.item.track_id;
-      this.authService.downloadFile(tid).subscribe((fileBlob: Blob) => {
-        console.log(fileBlob, 'fileBlob')
-        /** File - @ionic-native/file/ngx */
-        this.file.writeFile(downloadPath, tid + ".pdf", fileBlob, {replace: true});
-      }, (error) => {
-        console.log('345_Error: ', error.message);
-        this.commonService.alertErrorResponse(error.message);
-      });
-    }
   }
 
 }

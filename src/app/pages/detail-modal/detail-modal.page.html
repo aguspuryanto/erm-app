@@ -55,6 +55,7 @@
             <h2>Control Owner</h2>
           </ion-text>
         </ion-label>
+        <ion-button *ngIf="commonService.isEmpty(item.is_approve_control)" (click)="handleRiskupdate(item)" slot="end" color="primary">Update</ion-button>
       </ion-item>
       <ion-card-content>
         <p>PIC : {{ item.risk_owner_name }}</p>

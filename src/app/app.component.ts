@@ -1,4 +1,4 @@
-import { Component, QueryList, ViewChildren } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { NavigationEnd, NavigationExtras, Router } from '@angular/router';
 import { AlertController, IonRouterOutlet, Platform, ToastController } from '@ionic/angular';
 import { AuthenticationService } from './services/authentication.service';
@@ -21,7 +21,8 @@ export class AppComponent {
 
   lastTimeBackPress = 0;
   timePeriodToExit = 2000;
-  @ViewChildren(IonRouterOutlet) routerOutlets: QueryList < IonRouterOutlet > ;
+  // @ViewChildren(IonRouterOutlet) routerOutlets: QueryList < IonRouterOutlet > ;
+  @ViewChild(IonRouterOutlet, { static : true }) routerOutlet: IonRouterOutlet;
 
   constructor(
     public commonService: CommonService,

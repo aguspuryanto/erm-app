@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ActionSheetController, IonContent, IonRouterOutlet, LoadingController, ModalController, PopoverController } from '@ionic/angular';
 import { forkJoin } from 'rxjs';
 import { DetailPopoverComponent } from 'src/app/component/detail-popover/detail-popover.component';
@@ -130,13 +130,13 @@ export class DetailPage implements OnInit {
       // risk_status: "",
       search_by: "id",
       search_keyword: item.id
-  }
+    }
 
     const modal = await this.modalController.create({
       component: DetailModalPage,
       cssClass: 'my-custom-class',
-      swipeToClose: true,
-      presentingElement: this.routerOutlet.nativeEl,
+      // swipeToClose: true,
+      // presentingElement: this.routerOutlet.nativeEl,
       componentProps: { item: newParams }
     });
 
@@ -145,6 +145,13 @@ export class DetailPage implements OnInit {
     });
 
     return await modal.present();
+
+    // let navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     item: newParams
+    //   }
+    // };
+    // this.router.navigate(['/detail-modal'], navigationExtras);
   }
 
   async detailComment(item){
