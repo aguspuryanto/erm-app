@@ -13,6 +13,7 @@ const TOKEN_KEY = CONFIGURATION.TOKEN_KEY;
 const DATA_KEY = CONFIGURATION.DATA_KEY;
 const API_SITE = CONFIGURATION.apiEndpoint;
 const WEBAPI_SITE = CONFIGURATION.webapiEndpoint;
+const RESTAPI = CONFIGURATION.webapiEndpoint + 'restapi';
 
 @Injectable({
   providedIn: 'root'
@@ -66,8 +67,8 @@ export class AuthenticationService {
 
   getTokenArr(){
       let params = {
-          us_id: this.keyOfData,
-          token: this.token,
+        us_id: this.keyOfData.us_id,
+        token: this.token,
       }
 
       return params
@@ -215,26 +216,6 @@ export class AuthenticationService {
                   console.log('next:', data)
                   // if (data && data.success == 'false') this.isAuthenticated.next(false);
               },
-              error: (error) => console.log(error)
-          })
-      );
-  }
-
-  // Summary Task
-  sumaryTask() {
-      // this.getToken();
-      let params = {
-          start: '0',
-          query: this.keyOfData || '228',
-          xml: decodeURIComponent('workflow-master/summary-task.xml')
-      }
-      let queryParams = this.commonService.ObjectToParams(params);
-      // console.log(queryParams, 'queryParams_sumaryTask')
-
-      return this.http.get(`${API_SITE}/DataSource?` + queryParams, {responseType: 'text'}).pipe(
-          map((data: any) => JSON.parse(data.replace(/[()]/g, ""))),
-          tap({
-              next: (data) => console.log('next:', data),
               error: (error) => console.log(error)
           })
       );
@@ -696,7 +677,7 @@ export class AuthenticationService {
             next: (data) => {
                 console.log('next:', data.data.authtoken)
                 if (data.isSuccess == true) {
-                    Storage.set({key: DATA_KEY, value: data.data});
+                    Storage.set({key: DATA_KEY, value: JSON.stringify(data.data)});
                     Storage.set({key: TOKEN_KEY, value: data.data.authtoken});
                     this.isAuthenticated.next(true);
                 } else {
@@ -709,4 +690,37 @@ export class AuthenticationService {
         })
     )
   }
+
+  // Summary Risk
+  sumaryRisk() {
+    console.log(this.keyOfData, 'this.keyOfData')
+    let params = {
+        us_id: this.keyOfData.us_id
+    }
+    // let queryParams = this.commonService.ObjectToParams(params);
+
+    return this.http.post(`${WEBAPI_SITE}/restapi/risk/summary`, params).pipe(
+        map((data: any) => {
+            return data;
+        }),
+        tap({
+            next: (data) => console.log('next:', data),
+            error: (error) => console.log(error)
+        })
+    );
+  }
+
+    // Detail Risk
+    infoRisk(params) {
+        let newparams = {...params, ...{ us_id: this.keyOfData.us_id }};
+        return this.http.post(`${WEBAPI_SITE}/restapi/risk/risk-info`, newparams).pipe(
+            map((data: any) => {
+                return data;
+            }),
+            tap({
+                next: (data) => console.log('next:', data),
+                error: (error) => console.log(error)
+            })
+        );
+    }
 }

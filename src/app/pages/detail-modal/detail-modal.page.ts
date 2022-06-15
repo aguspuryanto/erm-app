@@ -19,10 +19,10 @@ export class DetailModalPage implements OnInit {
   // The `ion-modal` element reference.
   modal: HTMLElement;
   item:any = []
-
-  topTitle:string = 'Assignment';
-  myRequest: any = []  
+  
   menuPopover:any = []
+  segmentDetailselected = 1;
+  segmentDetailMenu: any = ['Risk Approval','Risk Identification','Existing Risk Assessment','Risk Control','Residual Risk Assessment','Risk Action Plan'];
 
   constructor(
     public commonService: CommonService,
@@ -41,18 +41,11 @@ export class DetailModalPage implements OnInit {
 
   ngOnInit() {
     this.item = this.navParams.get('item');
-    this.topTitle = this.navParams.get('topTitle');
-    // navigate
-    // this.route.queryParams.subscribe(params => {
-    //   this.item = JSON.parse(params['item']);
-    // });
-    // console.log(this.item, 'item')
-    this.getListAction()
+    console.log(this.item, '44_');
   }
 
   ionViewDidEnter() {
-    // let yOffset = document.getElementById('alp');
-    // this.content.scrollToPoint(0, yOffset - 70, 1000);
+    this.getListAction()
   }
 
   async getListAction(){
@@ -61,55 +54,14 @@ export class DetailModalPage implements OnInit {
     });
 
     await loading.present();
-    
-    const getListAction = this.authService.getSelectTasks2({
-      taskid: this.item.track_id,
-      jenis: 'getListActionMyTask'
-    });
-
-    const requests = forkJoin([getListAction]);
-    requests.subscribe(data => {
+    const sumaryRisk = this.authService.infoRisk(this.item);
+    forkJoin([sumaryRisk]).subscribe(data => {
       loading.dismiss();
-      console.log(data, '60_getListAction')
-      // console.log(data[0].message, 'message')
-      if(!data[0].success) {
-        // this.commonService.alertErrorResponse(data[0].message);
-
-      } else {
-        const listActionArr = JSON.parse(JSON.stringify(data[0].data));
-        const listAction = listActionArr[0]['listAction'];
-        const showAction = listActionArr[0]['show'].split(',');
-  
-        // get hidden Menu
-        var showMenuAction = [];
-        listAction.forEach((item, index) => {
-          showAction.forEach(show => {
-            if(show === showAction[index]) showMenuAction.push(listAction[show]);
-          });
-        });
-        // console.log(showMenuAction, 'showMenuAction');
-
-        // remove
-        showMenuAction = showMenuAction.filter(function(f) { return f !== 'flag' })
-        console.log(showMenuAction, 'showMenuAction');
-  
-        // add into menuPopover
-        showMenuAction.forEach(text => {
-          const name2 = text.charAt(0).toUpperCase() + text.slice(1);
-          if (this.menuPopover.filter(item=> item.mn_text == text).length == 0){
-            this.menuPopover.push({ 
-              mn_icon: this.commonService.getMenuIcon(text),
-              mn_text: text,
-              mn_name: this.commonService.getMenuText(name2)
-            });
-          }
-        });
-      }
-
+      console.log(data, '59_');
+      this.item = data[0].data;
     }, (error) => {
       loading.dismiss();
       console.log(error);
-      this.commonService.alertErrorResponse(error.message);
     });
   }
 
@@ -117,6 +69,12 @@ export class DetailModalPage implements OnInit {
     this.modalController.dismiss({
       'dismissed': true
     });
+  }
+
+  segmentChanged(ev: any) {
+    console.log('Segment changed:', ev.detail.value);
+    // this.segmentDetailselected = ev.detail.value;
+
   }
 
   handleOpenmenu(item){

@@ -33,7 +33,7 @@
       <ion-item class="ion-no-padding">
         <ion-label class="ion-text-wrap">
           <ion-text class="ion-float-left">
-            <h2>{{ item.track_code }}</h2>
+            <h2>{{ item.risk_code }}</h2>
           </ion-text>
         </ion-label>
         <ion-icon slot="end" size="large" (click)="handleClickFav(item)" [name]="item.is_flagged == true ? 'star' : 'star-outline'" [ngClass]="item.fav == true ? 'added' : ''"></ion-icon>
@@ -41,34 +41,48 @@
       </ion-item>
       <ion-card-content class="ion-no-padding">
         <div class="ion-padding detail-desc">
-          <h2>{{item.topic }}</h2>
-          <div [innerHTML]="item.track_desc"></div>
+          <h2>{{item.title }}</h2>
+          <div [innerHTML]="item.event"></div>
         </div>
         <!-- List of Text Items -->
         <ion-list>
           <ion-item lines="none">
+            <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0.583374 0.75V17.25H6.08337V14.0417H7.91671V17.25H13.4167V0.75H0.583374ZM2.41671 2.58333H4.25004V4.41667H2.41671V2.58333ZM6.08337 2.58333H7.91671V4.41667H6.08337V2.58333ZM9.75004 2.58333H11.5834V4.41667H9.75004V2.58333ZM2.41671 6.25H4.25004V8.08333H2.41671V6.25ZM6.08337 6.25H7.91671V8.08333H6.08337V6.25ZM9.75004 6.25H11.5834V8.08333H9.75004V6.25ZM2.41671 9.91667H4.25004V11.75H2.41671V9.91667ZM6.08337 9.91667H7.91671V11.75H6.08337V9.91667ZM9.75004 9.91667H11.5834V11.75H9.75004V9.91667ZM2.41671 13.5833H4.25004V15.4167H2.41671V13.5833ZM9.75004 13.5833H11.5834V15.4167H9.75004V13.5833Z" fill="#807E7E"/>
+            </svg>              
+            <ion-label>Division/Section : {{ item.department_name }}</ion-label>
+          </ion-item>
+          <ion-item lines="none">
             <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M9 0.916687L0.75 4.58335V10.0834C0.75 15.1709 4.27 19.9284 9 21.0834C13.73 19.9284 17.25 15.1709 17.25 10.0834V4.58335L9 0.916687ZM9 4.49169C9.5439 4.49169 10.0756 4.65297 10.5278 4.95515C10.9801 5.25732 11.3325 5.68681 11.5407 6.18931C11.7488 6.6918 11.8033 7.24474 11.6972 7.77818C11.5911 8.31163 11.3291 8.80164 10.9445 9.18623C10.5599 9.57082 10.0699 9.83274 9.5365 9.93885C9.00305 10.045 8.45012 9.9905 7.94762 9.78236C7.44512 9.57421 7.01563 9.22174 6.71346 8.7695C6.41128 8.31727 6.25 7.78559 6.25 7.24169C6.25 6.51234 6.53973 5.81287 7.05546 5.29714C7.57118 4.78142 8.27065 4.49169 9 4.49169ZM9 11.7334C10.8333 11.7334 14.5 12.7325 14.5 14.5567C13.898 15.4643 13.0807 16.2088 12.121 16.7238C11.1613 17.2389 10.0891 17.5084 9 17.5084C7.91087 17.5084 6.83866 17.2389 5.879 16.7238C4.91933 16.2088 4.10204 15.4643 3.5 14.5567C3.5 12.7325 7.16667 11.7334 9 11.7334Z" fill="#EB445A"/>
-            </svg>              
-            <ion-label>Assignor : {{ item.creator }}</ion-label>
+            </svg>
+            <ion-label>Risk Owner : {{ item.risk_owner_name }}</ion-label>
           </ion-item>
           <ion-item lines="none">
             <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M17.25 2.75002H11.585C11.2 1.68669 10.1917 0.916687 9 0.916687C7.80833 0.916687 6.8 1.68669 6.415 2.75002H0.75V19.25H17.25V2.75002ZM9 2.75002C9.50417 2.75002 9.91667 3.16252 9.91667 3.66669C9.91667 4.17085 9.50417 4.58335 9 4.58335C8.49583 4.58335 8.08333 4.17085 8.08333 3.66669C8.08333 3.16252 8.49583 2.75002 9 2.75002ZM9 6.41669C10.5217 6.41669 11.75 7.64502 11.75 9.16669C11.75 10.6884 10.5217 11.9167 9 11.9167C7.47833 11.9167 6.25 10.6884 6.25 9.16669C6.25 7.64502 7.47833 6.41669 9 6.41669ZM14.5 17.4167H3.5V16.1334C3.5 14.3 7.16667 13.2917 9 13.2917C10.8333 13.2917 14.5 14.3 14.5 16.1334V17.4167Z" fill="#FFC409"/>
+              <path d="M17.25 2.74984H11.585C11.2 1.6865 10.1917 0.916504 9 0.916504C7.80833 0.916504 6.8 1.6865 6.415 2.74984H0.75V19.2498H17.25V2.74984ZM9 2.74984C9.50417 2.74984 9.91667 3.16234 9.91667 3.6665C9.91667 4.17067 9.50417 4.58317 9 4.58317C8.49583 4.58317 8.08333 4.17067 8.08333 3.6665C8.08333 3.16234 8.49583 2.74984 9 2.74984ZM9 6.4165C10.5217 6.4165 11.75 7.64484 11.75 9.1665C11.75 10.6882 10.5217 11.9165 9 11.9165C7.47833 11.9165 6.25 10.6882 6.25 9.1665C6.25 7.64484 7.47833 6.4165 9 6.4165ZM14.5 17.4165H3.5V16.1332C3.5 14.2998 7.16667 13.2915 9 13.2915C10.8333 13.2915 14.5 14.2998 14.5 16.1332V17.4165Z" fill="#FFC409"/>
             </svg>              
-            <ion-label>Assignee : {{ item.assignee }}</ion-label>
+            <ion-label>Control Owner : {{ item.control_owner_name }}</ion-label>
           </ion-item>
           <ion-item lines="none">
             <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M2.125 19.625H0.75V0.375H17.25L13.2625 6.5625L17.25 12.75H2.125V19.625Z" fill="#2DD36F"/>
             </svg>              
-            <ion-label>Status : <ion-text color="danger">
+            <ion-label>Risk Status : <ion-text color="danger">
               <span class="ion-text-uppercase">{{ item.status_name }}</span>
+            </ion-text></ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.50255 17.2501H18.4884C19.1942 17.2501 19.6342 16.4893 19.2859 15.8751L10.7884 1.20844C10.7086 1.06859 10.5932 0.952347 10.4539 0.871491C10.3147 0.790635 10.1565 0.748047 9.99547 0.748047C9.83444 0.748047 9.67628 0.790635 9.53703 0.871491C9.39777 0.952347 9.28238 1.06859 9.20255 1.20844L0.705051 15.8751C0.356718 16.4893 0.796718 17.2501 1.50255 17.2501ZM10.9167 14.5001H9.08338V12.6668H10.9167V14.5001ZM10.0001 10.8334C9.49588 10.8334 9.08338 10.4209 9.08338 9.91677V8.08344C9.08338 7.57927 9.49588 7.16677 10.0001 7.16677C10.5042 7.16677 10.9167 7.57927 10.9167 8.08344V9.91677C10.9167 10.4209 10.5042 10.8334 10.0001 10.8334Z" fill="#3880FF"/>
+            </svg>              
+            <ion-label>Risk Rank : <ion-text color="danger">
+              <span class="ion-text-uppercase">{{ item.risk_rank }}</span>
             </ion-text></ion-label>
           </ion-item>
         </ion-list>
       </ion-card-content>
-      <ion-footer class="ion-padding">
+      <!-- <ion-footer class="ion-padding">
         <ion-row>
           <ion-col size="6" class="ion-text-left">
             <ion-label>Next Reporting</ion-label>
@@ -76,10 +90,10 @@
           </ion-col>
           <ion-col size="6" class="ion-text-right">
             <ion-label>Last Update</ion-label>
-            <span>{{ commonService.convertformatDate(item.datelastx) }}</span>
+            <span></span>
           </ion-col>
         </ion-row>
-      </ion-footer>
+      </ion-footer> -->
     </ion-card>
   </div>
 

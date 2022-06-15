@@ -162,6 +162,22 @@
 	--ion-color-insignificant-contrast-rgb: 255,255,255;
 	--ion-color-insignificant-shade: #419a4d;
 	--ion-color-insignificant-tint: #5cb768;
+
+  /** draft **/
+	--ion-color-draft: #4AAF57;
+	--ion-color-draft-rgb: 74,175,87;
+	--ion-color-draft-contrast: #ffffff;
+	--ion-color-draft-contrast-rgb: 255,255,255;
+	--ion-color-draft-shade: #419a4d;
+	--ion-color-draft-tint: #5cb768;
+
+  /** pending-approval **/
+	--ion-color-pending-approval: #4AAF57;
+	--ion-color-pending-approval-rgb: 74,175,87;
+	--ion-color-pending-approval-contrast: #ffffff;
+	--ion-color-pending-approval-contrast-rgb: 255,255,255;
+	--ion-color-pending-approval-shade: #419a4d;
+	--ion-color-pending-approval-tint: #5cb768;
 }
 
 @media (prefers-color-scheme: dark) {

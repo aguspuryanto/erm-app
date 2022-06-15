@@ -76,12 +76,12 @@ export class AppComponent {
       this.authService.isAuthenticated.subscribe(state => {
         console.log(state, '45_state')
         if (state) {
+          this.getUserPref();
           // this.router.navigate(['tabs']);
-          // const apiMenu = this.authService.getAPIMenu();
-          // const sumaryTask = this.authService.sumaryTask();
-          // forkJoin([apiMenu, sumaryTask]).subscribe(data => {  
+          // const sumaryRisk = this.authService.sumaryRisk();
+          // forkJoin([sumaryRisk]).subscribe(data => {  
           //   // console.log(data, '112_');
-          //   this.commonService.setlocalStorageObject('apimenuData', data);
+          //   this.commonService.setlocalStorageObject('sumaryRisk', data);
           // }, (error) => {
           //   console.log(error);
           // });

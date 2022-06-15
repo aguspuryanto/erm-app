@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ActionSheetController, LoadingController } from '@ionic/angular';
+import { forkJoin } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
 import { CommonService } from '../services/common.service';
 import { CONFIGURATION } from '../services/config.service';
@@ -39,6 +40,7 @@ export class Tab1Page {
     public actionSheetController: ActionSheetController
   ) {
     // this.topSegment = "risk";
+    this.segmentRiskMenu = CONFIGURATION.segmentRiskMenu;
   }
 
   ngOnInit() {
@@ -46,12 +48,56 @@ export class Tab1Page {
   }
 
   ionViewDidEnter() {
-    this.segmentRiskMenu = CONFIGURATION.segmentRiskMenu;
-    const apiMenu = this.commonService.getlocalStorageObject('apimenuData');
-    apiMenu.then((data: any) => {
-      console.log(data, 'data');
-      this.olahData(data);
-    });
+    // this.segmentRiskMenu = CONFIGURATION.segmentRiskMenu;
+    this.getSummary();
+  }
+  
+  async getSummary(){
+    this.commonService.removelocalStorageItem('sumaryRisk');
+    
+    // if(!this.commonService.isEmpty(this.commonService.getlocalStorageObject('sumaryRisk'))) {
+    //   const sumaryRisk = this.commonService.getlocalStorageObject('sumaryRisk');
+    //   sumaryRisk.then((data: any) => {
+    //     console.log(data, 'data');
+    //     this.olahData(data);
+    //   });
+    //   return;
+
+    // } else {
+
+      const sumaryRisk = this.authService.sumaryRisk();
+      forkJoin([sumaryRisk]).subscribe(data => {  
+        // console.log(data, '59_');
+        this.commonService.setlocalStorageObject('sumaryRisk', data);
+        this.olahData(data);
+      }, (error) => {
+        console.log(error);
+      });
+
+    // }
+  }
+  
+  rs_control_owner: any = []
+  rs_risk_owner: any = []
+  rs_cc_risk: any = []
+
+  ss_control_owner: any = []
+  ss_risk_owner: any = []
+  ss_cc_risk: any = []
+  olahData(data){  
+    console.log(data[0].data, '68_');
+    this.summaryRiskRangking = data[0].data.rank_summary.all_related_risk;
+    this.summaryRiskStatus = data[0].data.status_summary.all_related_risk;
+
+    // rank_summary
+    this.rs_cc_risk = data[0].data.rank_summary.cc_risk;
+    this.rs_risk_owner = data[0].data.rank_summary.risk_owner;
+    this.rs_control_owner = data[0].data.rank_summary.control_owner;
+
+    // status_summary
+    this.ss_cc_risk = data[0].data.status_summary.cc_risk;
+    this.ss_risk_owner = data[0].data.status_summary.risk_owner;
+    this.ss_control_owner = data[0].data.status_summary.control_owner;
   }
 
   async presentAction(title:string,itemButton:any,icon:any) {
@@ -66,9 +112,9 @@ export class Tab1Page {
            handler:  () => {
              console.log('Action sheet clicked',title);
               if (title=="My Task"){
-                this.handleMyTask(v);
+                // this.handleMyTask(v);
               } else if(title=="Group Task"){
-                this.handleGroupTask(v);
+                // this.handleGroupTask(v);
               }
 
            },
@@ -89,37 +135,6 @@ export class Tab1Page {
 
     console.log('onDidDismiss resolved with role and data', role, data);
     await this.content.scrollToTop(1000);
-  }
-  
-  async getSummary(){
-    // 
-  }
-  
-  olahData(data){
-    // const apiMenuData = data[0];
-    // const newData = data[1];
-    fetch("../../assets/data/riskranking.json").then(res=>res.json()).then(json=>{
-      this.summaryRiskRangking = json['data'];
-    });
-
-    fetch("../../assets/data/riskstatus.json").then(res=>res.json()).then(json=>{
-      this.summaryRiskStatus = json['data'];
-    });
-  }
-
-  handleShowAll(){
-    console.log(this.counterActive, 'handleShowAll');
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        task_type: this.counterActive
-      }
-    };
-    this.router.navigate(['/detail']);
-  }
-
-  loadRiskSummary(){
-    this.chartTitle = 'Risk Rangking';
-    this.counterActive = 'risk';
   }
 
   async handleInputSearch(event) {
@@ -165,230 +180,95 @@ export class Tab1Page {
     // this.searchText = event.target.value;
   }
 
-  async handleAssignmentTask(item){
-    console.log(item, 'handleAssignmentTask')
-    if(!item.value || item.value == '0') return;
+  handleShowAll(){
+    console.log(this.counterActive, 'handleShowAll');
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        info_type: 'list',
+        role: (this.topSegment!='all_related_risk') ? this.topSegment : '',
+      }
+    };
+    this.router.navigate(['/detail'], navigationExtras);
+  }
+
+  async handleRiskRangking(item){
+    console.log(item, 'handleRiskRangking')
+    // if(!item.value || item.value == '0') return;
+    if(this.topSegment == 'risk') this.topSegment = 'all_related_risk';
 
     let params = {
-      start: 0,
-      limit: 10,
-      jenis: 'getTaskList',
-      vTitle: 11,
-      stsfilter: 1,
-      neefilter: '-55555',
-      norfilter: '-55555',
-      sorfilter: 'track_date DESC',
-      groupedby: 0,
-      filteredby: '-55555',
+      info_type: 'list',
+      role: (this.topSegment!='all_related_risk') ? this.topSegment : '',
+      risk_rank: item.title, // Major / Moderate / Minor / Insignificant
+      // risk_status: '',
+      // search_by: '',
+      // search_keyword: '',
     }
     
-    params['stsfilter'] = this.commonService.getstsfilter(item.urai);
     this.goPageDetail(item, params);
   }
 
-  async handleGroupTask(item){
-    console.log(item, 'handleGroupTaskCounter')    
-    if(!item.value || item.value == '0') return;
-    let params = {
-      start: 0,
-      limit: 10,
-      jenis: 'getTaskList',
-      vTitle: 8, //My Active Task
-      stsfilter: 1, //View All
-      neefilter: '-55555',
-      norfilter: '-55555',
-      sorfilter: 'track_date DESC',
-      groupedby: 0,
-      filteredby: '-55555',
-    }
-    
-    params['stsfilter'] = this.commonService.getstsfilter(item.urai);
-    if(item.urai=='Management') {
-      params['vTitle'] = 15;
-      params['stsfilter'] = 1;
-    }
-    
-    if(item.urai=='Own') {
-      params['vTitle'] = 17;
-      params['stsfilter'] = 1;
-    }
-    this.goPageDetail(item, params);
-  }
-
-  async handleMyTask(item){
-    console.log(item, 'handleMyTask');
-    if(!item.value || item.value == '0') return;
+  async handleRiskStatus(item){
+    console.log(item, 'handleRiskStatus')
+    // if(!item.value || item.value == '0') return;
+    if(this.topSegment == 'risk') this.topSegment = 'all_related_risk';
 
     let params = {
-      start: 0,
-      limit: 10,
-      jenis: 'getTaskList',
-      vTitle: 8, //My Active Task
-      stsfilter: 1, //View All
-      neefilter: '-55555',
-      norfilter: '-55555',
-      sorfilter: 'track_date DESC',
-      groupedby: 0,
-      filteredby: '-55555',
+      info_type: 'list',
+      role: (this.topSegment!='all_related_risk') ? this.topSegment : '',
+      risk_status: item.id, // 1/ 2/ 3 / 4
+      // search_by: '',
+      // search_keyword: '',
     }
     
-    params['stsfilter'] = this.commonService.getstsfilter(item.urai);
-    this.goPageDetail(item, params);
-  }
-
-  handleRequesTask(item){
-    console.log(item, 'handleRequesTask')
-    if(!item.value || item.value == '0') return;
-    // redirect search page
-  }
-
-  handleRequesTaskCounter(item){
-    console.log(item, 'handleRequesTaskCounter')
-    if(!item.value || item.value == '0') return;
-    // redirect search page
-  }
-
-  async handleCCTask(item){
-    console.log(item, 'handleCCTask')
-    if(!item.value || item.value == '0') return;
-
-    let params = {
-      start: 0,
-      limit: 10,
-      jenis: 'getTaskList',
-      vTitle: 25, //25 = CC Reques
-      stsfilter: 10, //View All
-      neefilter: '-55555',
-      norfilter: '-55555',
-      sorfilter: 'track_date DESC',
-      groupedby: 0,
-      filteredby: '-55555',
-    }
-
-    // Active
-    if(item=='Active'){
-      params['stsfilter'] = 3
-    }
-    
-    // params['stsfilter'] = this.commonService.getstsfilter(item);
-    this.goPageDetail(item, params);
-  }
-
-  handleCCTaskCounter(item){
-    console.log(item, 'handleCCTaskCounter')
-    if(!item.value || item.value == '0') return;
-    // redirect search page
-  }
-
-  async handleFlaggedTask(item){
-    console.log(item, 'handleFlaggedTask')
-    if(!item.value || item.value == '0') return;
-
-    let params = {
-      start: 0,
-      limit: 10,
-      jenis: 'getTaskList',
-      vTitle: 8, //My Active Task
-      stsfilter: 1, //View All
-      neefilter: '-55555',
-      norfilter: '-55555',
-      sorfilter: 'track_date DESC',
-      groupedby: 0,
-      filteredby: '-55555',
-    }
-
-    // Management
-    if(item.urai=='Own'){
-      params['vTitle'] = 15
-    }
-
-    // Own
-    if(item.urai=='Own'){
-      params['vTitle'] = 17
-    }
-    
-    // params['stsfilter'] = this.commonService.getstsfilter(item);
-    this.goPageDetail(item, params);
-  }
-
-  // Handle Popover
-  async handleMyRequest(item){
-    console.log(item, 'handleMyRequest')
-
-    // Create Task
-    if(item=='Create Request'){
-      this.router.navigateByUrl('/new-request', { replaceUrl: true });
-      return;
-    }
-
-    let params = {
-      start: 0,
-      limit: 10,
-      jenis: 'getTaskList',
-      vTitle: 3, //Approval => My Request
-      stsfilter: 10, //View All
-      neefilter: '-55555',
-      norfilter: '-55555',
-      sorfilter: 'track_date DESC',
-      groupedby: 0,
-      filteredby: '-55555',
-    }
-    
-    // params['stsfilter'] = this.commonService.getstsfilter(item);
     this.goPageDetail(item, params);
   }
 
   async goPageDetail(item, params){
-    console.log(params, '342_params');
-    this.router.navigate(['/detail']);
-    // if(this.commonService.isEmptyObject(item)){
-    //   this.storageValue['title'] = item;
-    // } else {
-    //   this.storageValue['title'] = 'My ' + item.urai + ' Tasks';
-    // }
-    // this.storageValue['params'] = params;
+    // console.log(params, '342_params');
+    let navigationExtras: NavigationExtras = {
+      queryParams: params
+    };
 
-    // let loading = await this.loadingCtrl.create({
-    //   message: 'Data Loading ...'
-    // });
-
-    // await loading.present();
-    // this.authService.getSelectTasks(params).subscribe((response) => {
-    //   loading.dismiss();
-    //   var newData = JSON.parse(JSON.stringify(response));
-    //   if(newData['success']==true){
-    //     this.storageValue['data'] = newData['data'];
-    //     console.log(this.storageValue, 'storageValue')
-
-    //     this.commonService.removelocalStorageItem('tempdata');
-    //     this.commonService.setlocalStorageObject('tempdata', this.storageValue)
-
-    //     const urlwithParams = 'detail/' + this.counterActive + '/' + params['stsfilter'];
-    //     this.router.navigateByUrl(urlwithParams)
-    //   } else {
-    //     this.commonService.alertErrorResponse(newData['msg']);
-    //   }
-    // }, (error) => {
-    //   loading.dismiss();
-    //   console.log('Error: ', error.message)
-    //   this.commonService.alertErrorResponse(error.message);
-    // });
-  }
-
-  handleMyApproval(item){
-    console.log(item, 'handleMyApproval')
-    // redirect search page
+    this.router.navigate(['/detail'], navigationExtras);
   }
 
   segmentChanged(ev: any) {
     // console.log('Segment changed:', ev.detail.value);
     this.topSegment = ev.detail.value;
     this.counterActive = ev.detail.value;
-    console.log('Segment changed:', this.topSegment + ';' + this.counterActive);
+    console.log('Segment changed: topSegment=', this.topSegment + ';counterActive=' + this.counterActive);
+
+    if(this.topSegment == 'all_related_risk') {
+      this.getSummary();
+    }
+    if(this.topSegment == 'control_owner') {
+      this.summaryRiskRangking = this.rs_control_owner;
+      this.summaryRiskStatus = this.ss_control_owner;
+    }
+
+    if(this.topSegment == 'risk_owner') {
+      this.summaryRiskRangking = this.rs_risk_owner;
+      this.summaryRiskStatus = this.ss_risk_owner;
+    }
+
+    if(this.topSegment == 'cc_risk') {
+      this.summaryRiskRangking = this.rs_cc_risk;
+      this.summaryRiskStatus = this.ss_cc_risk;
+    }
   }
 
-  convertToColor(item){
-    return this.commonService.convertToColor(item);
+  convertToColor(item, colorcode=''){
+    if(typeof item === 'undefined') return;
+    // console.log(item, 'item');
+    const colorUndefined = ["Draft", "Pending Approval"];
+    if(colorUndefined.includes(item)){
+      // document.documentElement.style.setProperty('--ion-color-primary', '#' + colorcode);
+    }
+    
+    const color = this.commonService.convertToColor(item);
+    document.documentElement.style.setProperty('--ion-color-' + color, '#' + colorcode);
+    return color;
   }
 
   showNotifications(){

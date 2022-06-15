@@ -173,6 +173,24 @@ ion-searchbar {
 	--ion-color-tint: var(--ion-color-insignificant-tint);
 }
 
+.ion-color-draft {
+	--ion-color-base: var(--ion-color-draft);
+	--ion-color-base-rgb: var(--ion-color-draft-rgb);
+	--ion-color-contrast: var(--ion-color-draft-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-draft-contrast-rgb);
+	--ion-color-shade: var(--ion-color-draft-shade);
+	--ion-color-tint: var(--ion-color-draft-tint);
+}
+
+.ion-color-pending-approval {
+	--ion-color-base: var(--ion-color-pending-approval);
+	--ion-color-base-rgb: var(--ion-color-pending-approval-rgb);
+	--ion-color-contrast: var(--ion-color-pending-approval-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-pending-approval-contrast-rgb);
+	--ion-color-shade: var(--ion-color-pending-approval-shade);
+	--ion-color-tint: var(--ion-color-pending-approval-tint);
+}
+
 ion-searchbar{
   .searchbar-input-container{
     .searchbar-input{

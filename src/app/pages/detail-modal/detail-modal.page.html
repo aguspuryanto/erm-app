@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Task Details</ion-title>
+    <ion-title>Risk Detail</ion-title>
     <ion-buttons slot="start">
         <ion-button (click)="closeModal()"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
     </ion-buttons>
@@ -8,6 +8,13 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <!-- Default Segment -->
+  <ion-segment [(ngModel)]="segmentDetailselected" (ionChange)="segmentChanged($event)" scrollable class="ion-no-padding">
+    <ion-segment-button *ngFor="let item of segmentDetailMenu; let i = index" [value]="i+1">
+      <ion-label>{{ item }}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
   <ion-card>
     <ion-item class="ion-no-padding">
       <ion-label class="ion-text-wrap">
@@ -57,7 +64,7 @@
         </ion-item>
       </ion-list>
     </ion-card-content>
-    <ion-footer class="ion-padding">
+    <!-- <ion-footer class="ion-padding">
       <ion-row>
         <ion-col size="6" class="ion-text-left">
           <ion-label>Reporting Interval</ion-label>
@@ -65,10 +72,10 @@
         </ion-col>
         <ion-col size="6" class="ion-text-right">
           <ion-label>Last Update</ion-label>
-          <span>{{ convertformatDate(item.datelastx) }}</span>
+          <span></span>
         </ion-col>
       </ion-row>
-    </ion-footer>
+    </ion-footer> -->
   </ion-card>
     
   <div class="list-history ion-padding">

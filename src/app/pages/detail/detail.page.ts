@@ -46,7 +46,11 @@ export class DetailPage implements OnInit {
     public actionSheetController: ActionSheetController,
     public popoverController: PopoverController
   ) {
-    this.title = new Date();
+    // this.title = new Date();
+    this.route.queryParams.subscribe(params => {
+      console.log(params, '51_params');
+      this.params = params;      
+    });
   }
 
   ngOnInit() {
@@ -63,8 +67,12 @@ export class DetailPage implements OnInit {
   }
   
   async getSummary(){
-    fetch("../../assets/data/priorityArray.json").then(res=>res.json()).then(json=>{
-      this.recentSearches = json;
+    const sumaryRisk = this.authService.infoRisk(this.params);
+    forkJoin([sumaryRisk]).subscribe(data => {  
+      console.log(data, '72_');
+      this.recentSearches = data[0].data;
+    }, (error) => {
+      console.log(error);
     });
   };
 
@@ -109,12 +117,27 @@ export class DetailPage implements OnInit {
   }
 
   async detailModal(item){
+    // console.log(item,'detailModal');
+    const objCopy = {...this.params};
+    objCopy.info_type = 'detail';
+    objCopy.search_by = 'id';
+    objCopy.search_keyword = item.id;
+    console.log(objCopy,'this.params');
+
+    const newParams = {
+      info_type: "detail",
+      // role: "",
+      // risk_status: "",
+      search_by: "id",
+      search_keyword: item.id
+  }
+
     const modal = await this.modalController.create({
       component: DetailModalPage,
       cssClass: 'my-custom-class',
       swipeToClose: true,
       presentingElement: this.routerOutlet.nativeEl,
-      componentProps: { item: item }
+      componentProps: { item: newParams }
     });
 
     modal.onDidDismiss().then(dataReturned => {
