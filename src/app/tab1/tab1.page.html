@@ -4,7 +4,6 @@
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
     <ion-title class="ion-text-center">
-      <!-- {{ title | date :  "MMMM d" }} -->
       {{ titleText }}
     </ion-title>
     <ion-buttons slot="end">
@@ -12,9 +11,6 @@
         <ion-badge color="warning">3</ion-badge>
         <ion-icon name="notifications-outline"></ion-icon>
       </ion-button>
-      <!-- <ion-button [routerLink]="['/calendar']">
-        <ion-icon name="calendar-outline"></ion-icon>
-      </ion-button> -->
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -43,35 +39,6 @@
       <ion-label>CC Risk</ion-label>
     </ion-segment-button>
   </ion-segment>
-
-  <!-- <ion-grid class="ion-padding justify-content-center ion-align-items-center shadow-text dmenu-grid">
-    <ion-row *ngIf="topSegment=='risk'" class="ion-padding-vertical ion-align-items-center">
-      <ion-col size="3" *ngFor="let item of segmentRiskMenu"  (click)="handleTopTask(item)">
-        <ion-img [src]="item.icon"></ion-img>
-        <ion-label>{{ item.text}}</ion-label>
-      </ion-col>
-    </ion-row>
-    <ion-row *ngIf="topSegment=='task'" class="ion-padding-vertical ion-align-items-center">
-      <ion-col size="3" *ngFor="let item of segmentTaskMenu"  (click)="handleTopTask(item)">
-        <ion-img [src]="item.icon"></ion-img>
-        <ion-label>{{ item.text}}</ion-label>
-      </ion-col>
-    </ion-row>
-
-    <ion-row *ngIf="topSegment=='project'" class="ion-padding-vertical justify-content-center align-items-center">
-      <ion-col size="3" *ngFor="let item of segmentProjectMenu" class="project  ion-padding-vertical">
-        <ion-img [src]="item.icon"></ion-img>
-        <ion-label id="{{this.commonService.convertToSlug(item.text)}}-button">{{item.text}}</ion-label>
-      </ion-col>
-    </ion-row>
-
-    <ion-row *ngIf="topSegment=='approval'" class="ion-padding-vertical justify-content-center align-items-center">
-      <ion-col size="3" *ngFor="let item of segmentApprovalMenu" class="approval ion-padding-vertical">
-        <ion-img [src]="item.icon"></ion-img>
-        <ion-label>{{ item.text}}</ion-label>
-      </ion-col>
-    </ion-row>
-  </ion-grid> -->
 
   <div id="countertask" class="ion-no-padding">
     <ion-item lines="none">

@@ -11,5 +11,11 @@
   ],
   "include": [
     "src/**/*.d.ts"
+  ],
+  "proxies": [
+    {
+      "path": "/api/*",
+      "proxyUrl": "https://mersinders.com"
+    }
   ]
 }

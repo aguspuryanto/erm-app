@@ -67,11 +67,19 @@ export class DetailPage implements OnInit {
   }
   
   async getSummary(){
+    let loading = await this.loadingCtrl.create({
+      message: 'Data Loading ...'
+    });
+ 
+    await loading.present();
+
     const sumaryRisk = this.authService.infoRisk(this.params);
-    forkJoin([sumaryRisk]).subscribe(data => {  
+    forkJoin([sumaryRisk]).subscribe(data => {
+      loading.dismiss();
       console.log(data, '72_');
       this.recentSearches = data[0].data;
     }, (error) => {
+      loading.dismiss();
       console.log(error);
     });
   };

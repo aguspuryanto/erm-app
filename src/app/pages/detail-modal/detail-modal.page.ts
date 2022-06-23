@@ -23,7 +23,7 @@ export class DetailModalPage implements OnInit {
   item:any = []
   
   menuPopover:any = []
-  segmentDetailselected:number = 1;
+  segmentDetailselected:number = 0;
   segmentDetailMenu: any = ['Risk Approval','Risk Identification','Existing Risk Assessment','Risk Control','Residual Risk Assessment','Risk Action Plan'];
 
   constructor(
@@ -77,7 +77,7 @@ export class DetailModalPage implements OnInit {
 
   segmentChanged(ev: any) {
     console.log('Segment changed:', ev.detail.value);
-    this.segmentDetailselected = ev.detail.value;
+    if(ev.detail.value) this.segmentDetailselected = ev.detail.value;
   }
 
   async handleRiskupdate(item){
@@ -148,6 +148,25 @@ export class DetailModalPage implements OnInit {
 
   handlepresentAction(val){
     console.log(val, '153_handlepresentAction')
+  }
+
+  getStatusColor(val){
+    // console.log(val, '154_')
+    if(this.commonService.isEmpty(val) || val === undefined) {
+      return '#FFC409';
+    } else {
+      if(val == true) return '#3880FF';
+      if(val == false) return 'danger';
+    }
+  }
+
+  getStatusText(val){
+    if(this.commonService.isEmpty(val)) {
+      return 'PENDING APPROVAL';
+    } else {
+      if(val == true) return 'APPROVED';
+      if(val == false) return 'REJECTED';
+    }
   }
 
 }

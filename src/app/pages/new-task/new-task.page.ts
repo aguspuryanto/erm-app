@@ -17,14 +17,16 @@ export class NewTaskPage implements OnInit {
   
   newTaskForm: FormGroup;
 
-  priorityArr: any = []
+  // priorityArr: any = []
   groupArr: any = []
   countryArr: any = []
   companyArr: any = []
   deptArr: any = []
   categoryArr: any = []
-  topicArr: any = []
+  impactArr: any = []
+  LikelihoodArr: any = []
   userPref: any = []
+  intervalCtrlArr: any = [{'d': 'Day(s)', 'm': 'Month(s)', 'y': 'Year(s)'}]
 
   currentValue = 1;
   taskId: string = 'MKTG_SEA_MYS_002';
@@ -61,9 +63,15 @@ export class NewTaskPage implements OnInit {
       txtconsequences: [''],
       txtriskcat: [''],
       txtriskowner: [''],
+      txtriskcc: [''],
       txtriskimpact: [''],
       txtrisklikelihood: [''],
-      txtdesc: [''],
+      control_owner: [''],
+      control_desc: [''],
+      interval: [''],
+      interval_control: [''],
+      assist_control_owner: [''],
+      // txtdesc: [''],
       txtassignee: [''],
       txtfullname: [''],
       txtcc: [''],
@@ -90,49 +98,55 @@ export class NewTaskPage implements OnInit {
     });
  
     await loading.present();
-    this.authService.getUserPreferences().subscribe((response) => {
-      loading.dismiss();
-      console.log(response, '77_getUserPreferences')
-      let respArray = response.split('||')
-      if(respArray[0]=='false') {
-        // this.commonService.alertErrorResponse(respArray[1]);
-      } else {
-        this.userPref['councode'] = respArray[1];
-        this.userPref['compcode'] = respArray[2];
-        this.userPref['deptcode'] = respArray[3];
-        this.userPref['txtcat'] = '';
-        console.log(this.userPref, '96_userPref')
-      }
 
-      this.getTaskId();
-      this.getTaskPriority();
+    const getTokenArr = await this.authService.getTokenArr();
+    this.userPref['txtriskowner'] = getTokenArr.us_id;
+    // console.log(this.userPref, '96_userPref')
+    this.newTaskForm.get('txtriskowner').setValue(getTokenArr.us_id);
+
+    // this.authService.getUserPreferences().subscribe((response) => {
+    //   loading.dismiss();
+    //   console.log(response, '77_getUserPreferences')
+    //   let respArray = response.split('||')
+    //   if(respArray[0]=='false') {
+    //     // this.commonService.alertErrorResponse(respArray[1]);
+    //   } else {
+    //     this.userPref['councode'] = respArray[1];
+    //     this.userPref['compcode'] = respArray[2];
+    //     this.userPref['deptcode'] = respArray[3];
+    //     this.userPref['txtcat'] = '';
+    //     console.log(this.userPref, '96_userPref')
+    //   }
+
+      // this.getTaskId();
       
-      const getGroupList = this.authService.getGroupDatauser();
-      const getCatList = this.authService.getCategory();
-      const getTopicList = this.authService.getTopikData();
       const getCountryList = this.authService.getCountryActive();
-      const getCompanyList = this.authService.getCountryCompany({
-        query: this.userPref.councode || '062'
-      });
-      const getDeptList = this.authService.getDepartment({
-        query: this.userPref.compcode || '10'
-      });
+      // const getCompanyList = this.authService.getCountryCompany({
+      //   query: this.userPref.councode || '062'
+      // });
+      // const getDeptList = this.authService.getDepartment({
+      //   query: this.userPref.compcode || '10'
+      // });
 
-      forkJoin([getGroupList, getCatList, getTopicList, getCountryList, getCompanyList, getDeptList])
+      forkJoin([getCountryList])
       .subscribe(data => {
-        console.log(data);
-        this.groupArr = JSON.parse(JSON.stringify(data[0].data));
-        this.categoryArr = JSON.parse(JSON.stringify(data[1].data));
-        this.topicArr = JSON.parse(JSON.stringify(data[2].data));
-        this.countryArr = JSON.parse(JSON.stringify(data[3].data));
-        this.companyArr = JSON.parse(JSON.stringify(data[4].data));
-        this.deptArr = JSON.parse(JSON.stringify(data[5].data));
+        loading.dismiss();
+        console.log(data, '124_');
+        this.groupArr = data[0]['data']['listOwner'];
+        this.countryArr = data[0]['data']['listCountry'];
+        this.categoryArr = data[0]['data']['listCategory'];
+        this.impactArr = data[0]['data']['listImpact'];
+        this.LikelihoodArr = data[0]['data']['listLikelihood'];
+
+        // this.topicArr = JSON.parse(JSON.stringify(data[2].data));
+        // this.companyArr = JSON.parse(JSON.stringify(data[4].data));
+        // this.deptArr = JSON.parse(JSON.stringify(data[5].data));
       });
 
-    }, (error) => {
-      loading.dismiss();
-      console.log('Error: ', error.message)
-    });
+    // }, (error) => {
+    //   loading.dismiss();
+    //   console.log('Error: ', error.message)
+    // });
   }
 
   async getTaskId() {
@@ -159,20 +173,6 @@ export class NewTaskPage implements OnInit {
     });
   }
 
-  async getTaskPriority(){
-    let loading = await this.loadingCtrl.create({
-      message: 'Data Loading ...',
-      showBackdrop: true,
-    });
- 
-    await loading.present(); 
-    fetch("../../assets/data/priority.json").then(res=>res.json()).then(json=>{
-      loading.dismiss();
-      this.priorityArr = json['data'].sort().reverse(); //sort desc
-    });
-
-  }
-
   async addTask() {
     this.newTaskForm.get('prid').setValue(this.currentValue);
 
@@ -185,7 +185,7 @@ export class NewTaskPage implements OnInit {
     formData.append('txtduedate', this.newTaskForm.get('txtduedate').value);
     formData.append('txtestdate', this.newTaskForm.get('txtestdate').value);
     formData.append('txttitle', this.newTaskForm.get('txttitle').value);
-    formData.append('txtdesc', this.newTaskForm.get('txtdesc').value);
+    // formData.append('txtdesc', this.newTaskForm.get('txtdesc').value);
     formData.append('txtassignee', this.newTaskForm.get('txtassignee').value);
     formData.append('txtfullname', this.newTaskForm.get('txtfullname').value);
     formData.append('txtcc', this.newTaskForm.get('txtcc').value);
@@ -290,7 +290,54 @@ export class NewTaskPage implements OnInit {
     });
   }
 
-  onChangeDepartement(ev: any){
+  onChangeRiskOwner(ev: any){
+    console.log(ev.target.value, '')
+    // let item = this.groupArr.filter(o=>Object.values(o).includes(ev.target.value));
+    if(!this.commonService.isEmptyObject(this.groupArr)) {
+      let item = this.groupArr.find(x => x.id === 228);
+      console.log(item, '297_')
+      this.newTaskForm.get('control_owner').setValue(item.name);
+    }
+  }
+
+  risk_rank = 0;
+  async onChangeLikelihood(ev: any){
+    console.log(ev.target.value, '')
+    const txtriskimpact = this.newTaskForm.get('txtriskimpact').value;
+    const txtrisklikelihood = ev.target.value; //this.newTaskForm.get('txtrisklikelihood').value;
+
+    if(txtriskimpact && txtrisklikelihood) {
+      let loading = await this.loadingCtrl.create({
+        message: 'Data Loading ...'
+      });
+   
+      await loading.present();
+      this.authService.getRangking({
+        impact_id: txtriskimpact,
+        likelihood_id: txtrisklikelihood
+      }).subscribe((response) => {
+        loading.dismiss();
+        console.log(response);
+        var newData = JSON.parse(JSON.stringify(response));
+        // this.risk_rank = newData['data'];
+        let respArray = newData['data'].split('||')
+        this.risk_rank = respArray[0];
+      }, (error) => {
+        loading.dismiss();
+        this.commonService.alertErrorResponse(error.message);
+      });
+    }
+  }
+
+  onChangeControlOwner(ev: any){
+
+  }
+
+  onChangeControlPeriod(ev: any){
+
+  }
+
+  onChangeAssistant(ev: any){
 
   }
 
@@ -298,12 +345,6 @@ export class NewTaskPage implements OnInit {
     let item = this.categoryArr.filter(o=>Object.values(o).includes(ev.target.value));
     console.log(item, '325_onChangeCategory')
     if(!this.commonService.isEmptyObject(item)) this.newTaskForm.get('txtcatname').setValue(item[0]['cat_name']);
-  }
-
-  onChangeTopic(ev: any){
-    let item = this.topicArr.filter(o=>Object.values(o).includes(ev.target.value));
-    console.log(item, '331_onChangeTopic')
-    if(!this.commonService.isEmptyObject(item)) this.newTaskForm.get('txttopic').setValue(item[0]['topik']);
   }
 
   onFileChange(event, i) {

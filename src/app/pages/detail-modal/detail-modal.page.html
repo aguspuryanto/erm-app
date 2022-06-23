@@ -10,16 +10,16 @@
 <ion-content class="ion-padding">
   <!-- Default Segment -->
   <ion-segment [(ngModel)]="segmentDetailselected" (ionChange)="segmentChanged($event)" scrollable class="ion-no-padding">
-    <ion-segment-button *ngFor="let segment of segmentDetailMenu; let i = index" [value]="i+1">
-      <ion-button shape="round" fill="outline">{{ segment }}</ion-button>
+    <ion-segment-button *ngFor="let segment of segmentDetailMenu; let i = index" [value]="i">
+      <ion-button shape="round" [fill]="i==segmentDetailselected ? 'solid' : 'outline'" [color]="i==segmentDetailselected ? 'primary' : ''">{{ segment }}</ion-button>
     </ion-segment-button>
   </ion-segment>
 
-  <div *ngIf="segmentDetailselected==1">
+  <div *ngIf="segmentDetailselected==0">
     <ion-card>
       <ion-item class="ion-no-padding">
         <ion-label class="ion-text-wrap">
-          <ion-text class="ion-float-left">
+          <ion-text color="primary" class="ion-float-left">
             <h2>Risk Management</h2>
           </ion-text>
         </ion-label>
@@ -27,7 +27,7 @@
       <ion-card-content>
         <p>PIC : {{ item.approval_pic_management_name }}</p>
         <p>Update Date : {{ item.approval_date_owner }}</p>
-        <p>Agreement Status : {{ item.is_approve_management }}</p>
+        <p>Agreement Status : <ion-text [ngStyle]="{'color': getStatusColor(item.is_approve_management) }">{{ getStatusText(item.is_approve_management)  }}</ion-text></p>
         <p>Remark : {{ item.approval_remark_management }}</p>
       </ion-card-content>
     </ion-card>
@@ -35,15 +35,15 @@
     <ion-card>
       <ion-item class="ion-no-padding">
         <ion-label class="ion-text-wrap">
-          <ion-text class="ion-float-left">
-            <h2>Risk Owner</h2>
+          <ion-text color="primary" class="ion-float-left">
+            <h2 color>Risk Owner</h2>
           </ion-text>
         </ion-label>
       </ion-item>
       <ion-card-content>
         <p>PIC : {{ item.risk_owner_name }}</p>
         <p>Update Date : {{ item.approval_date_owner }}</p>
-        <p>Agreement Status : {{ item.is_approve_owner }}</p>
+        <p>Agreement Status : <ion-text [ngStyle]="{'color': getStatusColor(item.is_approve_owner) }">{{ getStatusText(item.is_approve_owner) }}</ion-text></p>
         <p>Remark : {{ item.approval_remark_owner }}</p>
       </ion-card-content>
     </ion-card>
@@ -51,7 +51,7 @@
     <ion-card>
       <ion-item class="ion-no-padding">
         <ion-label class="ion-text-wrap">
-          <ion-text class="ion-float-left">
+          <ion-text color="primary" class="ion-float-left">
             <h2>Control Owner</h2>
           </ion-text>
         </ion-label>
@@ -60,13 +60,13 @@
       <ion-card-content>
         <p>PIC : {{ item.risk_owner_name }}</p>
         <p>Update Date : {{ item.approval_date_control }}</p>
-        <p>Agreement Status : {{ item.is_approve_control }}</p>
+        <p>Agreement Status : <ion-text [ngStyle]="{'color': getStatusColor(item.is_approve_control) }">{{ getStatusText(item.is_approve_control) }}</ion-text></p>
         <p>Remark : {{ item.approval_remark_control }}</p>
       </ion-card-content>
     </ion-card>
   </div>
 
-  <div *ngIf="segmentDetailselected==2">  
+  <div *ngIf="segmentDetailselected==1">  
     <ion-card>
       <ion-item class="ion-no-padding">
         <ion-label class="ion-text-wrap">
@@ -127,7 +127,7 @@
     </ion-card>
   </div>
   
-  <div *ngIf="segmentDetailselected==3">
+  <div *ngIf="segmentDetailselected==2">
     <ion-card>
       <ion-card-content>
         <p>Impact : {{ item.existing_impact_title }}</p>
@@ -143,7 +143,7 @@
     </ion-card>
   </div>
 
-  <div *ngIf="segmentDetailselected==4">
+  <div *ngIf="segmentDetailselected==3">
     <ion-card>
       <ion-card-content>
         <p>Control Owner : {{ item.control_owner_name }}</p>
@@ -155,7 +155,7 @@
     </ion-card>
   </div>
   
-  <div *ngIf="segmentDetailselected==5">
+  <div *ngIf="segmentDetailselected==4">
     <!-- List Inset Lines -->
     <ion-list lines="inset">
       <ion-item lines="inset">
@@ -176,7 +176,7 @@
     </ion-list>
   </div>
   
-  <div *ngIf="segmentDetailselected==6">
+  <div *ngIf="segmentDetailselected==5">
     <!-- List Inset Lines -->
     <ion-list lines="inset">
       <ion-item lines="inset">

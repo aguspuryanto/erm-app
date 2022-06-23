@@ -100,43 +100,6 @@ export class Tab1Page {
     this.ss_control_owner = data[0].data.status_summary.control_owner;
   }
 
-  async presentAction(title:string,itemButton:any,icon:any) {
-
-   // let icon = ['flash-outline','archive-outline'];
-    var buttonsfill = itemButton.map((v,i)=>{
-       return {
-           text: v,
-           role: 'role-'+v,
-           icon: icon[i],
-           id: 'button-'+i,
-           handler:  () => {
-             console.log('Action sheet clicked',title);
-              if (title=="My Task"){
-                // this.handleMyTask(v);
-              } else if(title=="Group Task"){
-                // this.handleGroupTask(v);
-              }
-
-           },
-         translucent:true,
-           data: i}
-    });
-
-    const actionSheet = await this.actionSheetController.create({
-      header: title,
-      cssClass: 'my-action-class',
-      buttons: buttonsfill
-
-    });
-    await this.content.scrollByPoint(0, 360, 800);
-    await actionSheet.present();
-
-    const { role, data } = await actionSheet.onDidDismiss();
-
-    console.log('onDidDismiss resolved with role and data', role, data);
-    await this.content.scrollToTop(1000);
-  }
-
   async handleInputSearch(event) {
     this.searchText = event.target.value;
     if(this.searchText.length >=3) {

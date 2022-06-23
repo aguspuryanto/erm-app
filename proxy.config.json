@@ -1,6 +1,6 @@
 {
-    "/workflow2": {
-        "target": "http://fts.dxn2u.com:8282",
+    "/restapi": {
+        "target": "https://erm-dev.dxn2u.com",
         "secure": false,
         "logLevel": "debug"
     }

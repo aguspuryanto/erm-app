@@ -9,7 +9,6 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">localhost</domain>
         <domain includeSubdomains="true">127.0.0.1</domain>
-        <domain includeSubdomains="true">fts.dxn2u.com</domain>
-        <domain includeSubdomains="true">care3.dxn2u.com</domain>
+        <domain includeSubdomains="true">erm-dev.dxn2u.com</domain>
     </domain-config>
 </network-security-config>

@@ -3,5 +3,9 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "proxies": [{
+    "path": "/restapi",
+    "proxyUrl": "https://erm-dev.dxn2u.com"
+  }]
 }

@@ -82,24 +82,66 @@
           </ion-item>
         </ion-list>
       </ion-card-content>
-      <!-- <ion-footer class="ion-padding">
-        <ion-row>
-          <ion-col size="6" class="ion-text-left">
-            <ion-label>Next Reporting</ion-label>
-            <span>{{ item.nextrep }}</span>
-          </ion-col>
-          <ion-col size="6" class="ion-text-right">
-            <ion-label>Last Update</ion-label>
-            <span></span>
-          </ion-col>
-        </ion-row>
-      </ion-footer> -->
     </ion-card>
   </div>
 
+  <!-- Skeleton screen -->
   <ng-template #recentNo>
-    <div class="recent-no ion-align-items-center">
-      <h2 color="danger">Not Found!</h2>
+    <div class="xrecent-no ion-align-items-center">
+      <!-- <h2 color="danger">Not Found!</h2> -->    
+      <ion-list>
+        <ion-list-header>
+          <ion-label>
+            <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+          </ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-avatar slot="start">
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-avatar>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-thumbnail>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-skeleton-text animated style="width: 27px; height: 27px" slot="start"></ion-skeleton-text>
+          <ion-label>
+            <h3>
+              <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            </h3>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+            <p>
+              <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
     </div>
   </ng-template>
 

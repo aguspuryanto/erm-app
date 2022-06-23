@@ -188,4 +188,8 @@ export class AppComponent {
       }
     });
   }
+
+  pinFormatter(value: number) {
+    return `${value}%`;
+  }
 }

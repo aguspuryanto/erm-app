@@ -13,7 +13,7 @@ const TOKEN_KEY = CONFIGURATION.TOKEN_KEY;
 const DATA_KEY = CONFIGURATION.DATA_KEY;
 const API_SITE = CONFIGURATION.apiEndpoint;
 const WEBAPI_SITE = CONFIGURATION.webapiEndpoint;
-const RESTAPI = CONFIGURATION.webapiEndpoint + 'restapi';
+const RESTAPI = CONFIGURATION.webapiEndpoint + '/restapi';
 
 @Injectable({
   providedIn: 'root'
@@ -302,43 +302,6 @@ export class AuthenticationService {
       );
   }
 
-  getCountryCompany(params: any = {}) {
-      // this.getToken();
-      // params['query'] = '062';
-      params['xml'] = decodeURIComponent('workflow-master/task/company-data-country.xml');
-      params['us_id'] = this.keyOfData;
-      params['token'] = this.token;
-
-      let queryParams = this.commonService.ObjectToParams(params)
-      // console.log(queryParams, 'queryParams')
-
-      return this.http.get(`${API_SITE}/DataSource?` + queryParams, {responseType: 'text'}).pipe(
-          map((data: any) => JSON.parse(data.replace(/[()]/g, ""))),
-          tap({
-              next: (data) => console.log('next:', data),
-              error: (error) => console.log(error)
-          })
-      );
-  }
-
-  getCountryActive(params: any = {}) {
-      // this.getToken();
-      params['xml'] = decodeURIComponent('workflow-master/task/country-data-active.xml');
-      params['us_id'] = this.keyOfData;
-      params['token'] = this.token;
-
-      let queryParams = this.commonService.ObjectToParams(params);
-      // console.log(queryParams, 'queryParams')
-
-      return this.http.get(`${API_SITE}/DataSource?` + queryParams, {responseType: 'text'}).pipe(
-          map((data: any) => JSON.parse(data.replace(/[()]/g, ""))),
-          tap({
-              next: (data) => console.log('next:', data),
-              error: (error) => console.log(error)
-          })
-      );
-  }
-
   getGroupDatauser(params: any = {}) {
       // this.getToken();
       params['start'] = '0';
@@ -368,26 +331,6 @@ export class AuthenticationService {
       params['token'] = this.token;
 
       let queryParams = this.commonService.ObjectToParams(params)
-      // console.log(queryParams, 'queryParams')
-
-      return this.http.get(`${API_SITE}/DataSource?` + queryParams, {responseType: 'text'}).pipe(
-          map((data: any) => JSON.parse(data.replace(/[()]/g, ""))),
-          tap({
-              next: (data) => console.log('next:', data),
-              error: (error) => console.log(error)
-          })
-      );
-  }
-
-  getDepartment(params: any = {}) {
-      params['start'] = '0';
-      params['query'] = '10';
-      params['xml'] = decodeURIComponent('workflow-master/task/departments-data-active.xml');
-      params['us_id'] = this.keyOfData;
-      params['token'] = this.token;
-      console.log(params, '164_params')
-
-      let queryParams = this.commonService.ObjectToParams(params);
       // console.log(queryParams, 'queryParams')
 
       return this.http.get(`${API_SITE}/DataSource?` + queryParams, {responseType: 'text'}).pipe(
@@ -717,6 +660,60 @@ export class AuthenticationService {
             map((data: any) => {
                 return data;
             }),
+            tap({
+                next: (data) => console.log('next:', data),
+                error: (error) => console.log(error)
+            })
+        );
+    }
+
+    getCountryActive(params: any = {}) {
+        params['us_id'] = this.keyOfData.us_id;
+        params['token'] = this.token;  
+        let queryParams = this.commonService.ObjectToParams(params);
+        // console.log(queryParams, 'queryParams')  
+        return this.http.get(`${RESTAPI}/risk/country?` + queryParams).pipe(
+            tap({
+              next: (data) => console.log('next:', data),
+              error: (error) => console.log(error)
+            })
+        );
+    }
+
+    getCountryCompany(params: any = {}) {
+        params['us_id'] = this.keyOfData.us_id;
+        params['token'] = this.token;  
+        let queryParams = this.commonService.ObjectToParams(params)
+        // console.log(queryParams, 'queryParams')
+  
+        return this.http.get(`${RESTAPI}/risk/company?` + queryParams).pipe(
+            tap({
+                next: (data) => console.log('next:', data),
+                error: (error) => console.log(error)
+            })
+        );
+    }
+
+    getDepartment(params: any = {}) {
+        // params['query'] = '10';
+        // params['us_id'] = this.keyOfData.us_id;
+        // params['token'] = this.token;  
+        // let queryParams = this.commonService.ObjectToParams(params);
+        // console.log(queryParams, 'queryParams')
+        let newparams = {...params, ...{ us_id: this.keyOfData.us_id, token: this.token }};
+        let queryParams = this.commonService.ObjectToParams(newparams);
+        return this.http.get(`${RESTAPI}/risk/department?` + queryParams).pipe(
+            tap({
+                next: (data) => console.log('next:', data),
+                error: (error) => console.log(error)
+            })
+        );
+    }
+
+    getRangking(params: any = {}){
+        let newparams = {...params, ...{ us_id: this.keyOfData.us_id, token: this.token }};
+        let queryParams = this.commonService.ObjectToParams(newparams);
+        return this.http.get(`${RESTAPI}/risk/getranking?` + queryParams).pipe(
             tap({
                 next: (data) => console.log('next:', data),
                 error: (error) => console.log(error)
