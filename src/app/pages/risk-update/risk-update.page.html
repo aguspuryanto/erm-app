@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update Risk Status</ion-title>
+    <ion-buttons slot="start">
+        <ion-button (click)="closeModal()"><ion-icon name="arrow-back-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>      
+    <ion-item lines="none">
+      <ion-label position="stacked">Approve/Reject</ion-label>
+      <ion-select placeholder="Select One">
+        <ion-select-option *ngFor="let val of statusArr" value="{{ val.ct_id }}">{{ val.ct_name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Remark</ion-label>
+      <ion-textarea rows="6" class="ion-text-center ion-align-items-center"></ion-textarea>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border ion-align-items-center" collapse="fade">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-button shape="round" color="primary">SAVE</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
