@@ -114,8 +114,16 @@
     </ion-item>
   </ion-list>
   
-  <div class="version text-center">
+  <!-- <div class="version ion-text-center">
     <ion-label>{{AppName || 'ERM'}}</ion-label>
-    <ion-label>ver {{VersionCode || '1.0.2'}}</ion-label>
-  </div>
+    <ion-label>ver {{VersionName || '1.0.2'}}</ion-label>
+  </div> -->
 </ion-content>
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      <ion-label>{{AppName || 'ERM'}}</ion-label>
+      <ion-label>ver {{VersionName || '1.0.2'}}</ion-label>
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>
