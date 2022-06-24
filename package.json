@@ -12,6 +12,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "engines": {
+    "node": "12.x"
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "~13.2.2",
