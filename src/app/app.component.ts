@@ -34,9 +34,8 @@ export class AppComponent {
     private authService: AuthenticationService,
     private network: Network
   ) {
-    this.routeURL = this.router.url;
+    // this.routeURL = this.router.url;
     this.initializeApp();
-
     // check connection
     // this.checkNetwork();
   }
@@ -58,12 +57,12 @@ export class AppComponent {
       document.body.setAttribute('data-theme', 'light');
       document.body.classList.toggle('dark', false);
 
-      this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        console.log('prev:', event.url);
-        this.previousUrl = event.url;
-      });
+      // this.router.events
+      // .pipe(filter(event => event instanceof NavigationEnd))
+      // .subscribe((event: NavigationEnd) => {
+      //   console.log('prev:', event.url);
+      //   this.previousUrl = event.url;
+      // });
 
       if (this.platform.is('android')) {
         console.log('android');
@@ -79,13 +78,6 @@ export class AppComponent {
         if (state) {
           this.getUserPref();
           // this.router.navigate(['tabs']);
-          // const sumaryRisk = this.authService.sumaryRisk();
-          // forkJoin([sumaryRisk]).subscribe(data => {  
-          //   // console.log(data, '112_');
-          //   this.commonService.setlocalStorageObject('sumaryRisk', data);
-          // }, (error) => {
-          //   console.log(error);
-          // });
         } else {
           let navigationExtras: NavigationExtras = {
             queryParams: {

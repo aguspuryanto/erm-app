@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PopoverController, ActionSheetController, LoadingController, ModalController, NavParams, Platform, IonRouterOutlet } from '@ionic/angular';
+import { PopoverController, ActionSheetController, LoadingController, ModalController, NavParams, Platform, IonRouterOutlet, IonSlides } from '@ionic/angular';
 import { forkJoin } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { CommonService } from 'src/app/services/common.service';
@@ -25,6 +25,12 @@ export class DetailModalPage implements OnInit {
   menuPopover:any = []
   segmentDetailselected:number = 0;
   segmentDetailMenu: any = ['Risk Approval','Risk Identification','Existing Risk Assessment','Risk Control','Residual Risk Assessment','Risk Action Plan'];
+
+  slideOpts = {
+    initialSlide: 0,
+    slidesPerView: 1,
+    speed: 400
+  };
 
   constructor(
     public commonService: CommonService,
@@ -78,6 +84,13 @@ export class DetailModalPage implements OnInit {
   segmentChanged(ev: any) {
     console.log('Segment changed:', ev.detail.value);
     if(ev.detail.value) this.segmentDetailselected = ev.detail.value;
+  }
+
+  async slidesChanged(slides: IonSlides) {
+    // this.selectedSlide = slides;
+    slides.getActiveIndex().then( selectedIndex =>{
+      this.segmentDetailselected = selectedIndex; 
+    });
   }
 
   async handleRiskupdate(item){

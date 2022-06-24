@@ -222,15 +222,17 @@ export class Tab1Page {
   }
 
   convertToColor(item, colorcode=''){
-    if(typeof item === 'undefined') return;
     // console.log(item, 'item');
+    if(typeof item === 'undefined') return;
     const colorUndefined = ["Draft", "Pending Approval"];
+    const colorCode = colorcode.replace("#", "");
     if(colorUndefined.includes(item)){
-      // document.documentElement.style.setProperty('--ion-color-primary', '#' + colorcode);
+      document.documentElement.style.setProperty('--ion-color-primary', '#' + colorCode);
     }
     
     const color = this.commonService.convertToColor(item);
-    document.documentElement.style.setProperty('--ion-color-' + color, '#' + colorcode);
+    // console.log('--ion-color-' + color + ';#' + colorCode);
+    document.documentElement.style.setProperty('--ion-color-' + color, '#' + colorCode);
     return color;
   }
 

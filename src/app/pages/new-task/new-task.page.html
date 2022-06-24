@@ -33,62 +33,62 @@
       
           <ion-item lines="none">
             <ion-label position="stacked">Country</ion-label>
-            <ion-select placeholder="Select One" [(ngModel)]="userPref.councode" (ionChange)="onChangeCountry($event)" formControlName="councode">
+            <ion-select placeholder="Select One" [(ngModel)]="userPref.country" (ionChange)="onChangeCountry($event)" formControlName="country">
               <ion-select-option *ngFor="let val of countryArr" value="{{ val.ct_id }}">{{ val.ct_name }}</ion-select-option>
             </ion-select>
           </ion-item>
     
           <ion-item lines="none">
             <ion-label position="stacked">Company</ion-label>
-            <ion-select placeholder="Select One" [(ngModel)]="userPref.compcode" (ionChange)="onChangecompany($event)" formControlName="compcode">
+            <ion-select placeholder="Select One" [(ngModel)]="userPref.company" (ionChange)="onChangecompany($event)" formControlName="company">
               <ion-select-option *ngFor="let val of companyArr" value="{{ val.co_id }}">{{ val.co_name }}</ion-select-option>
             </ion-select>
           </ion-item>
     
           <ion-item lines="inset">
             <ion-label position="stacked">Department</ion-label>
-            <ion-select placeholder="Select One" [(ngModel)]="userPref.deptcode" formControlName="deptcode">
+            <ion-select placeholder="Select One" [(ngModel)]="userPref.department" formControlName="department">
               <ion-select-option *ngFor="let val of deptArr" value="{{ val.id }}">{{ val.name }}</ion-select-option>
             </ion-select>
           </ion-item>
     
           <ion-item lines="inset">
             <ion-label position="stacked">Risk Owner</ion-label>
-            <ion-select placeholder="Select One" [(ngModel)]="userPref.txtriskowner" (ionChange)="onChangeRiskOwner($event)" formControlName="txtriskowner">
+            <ion-select placeholder="Select One" [(ngModel)]="userPref.risk_owner" (ionChange)="onChangeRiskOwner($event)" formControlName="risk_owner">
               <ion-select-option *ngFor="let val of groupArr" value="{{ val.id }}">{{ val.name }}</ion-select-option>
             </ion-select>
           </ion-item>
     
           <ion-item lines="none">
             <ion-label position="stacked">Risk Title</ion-label>
-            <ion-input type="text" formControlName="txttitle"></ion-input>
+            <ion-input type="text" formControlName="title"></ion-input>
           </ion-item>
     
           <ion-item lines="none">
             <ion-label position="stacked">Risk Event</ion-label>
-            <ion-input type="text" formControlName="txtevent"></ion-input>
+            <ion-input type="text" formControlName="event"></ion-input>
           </ion-item>
     
           <ion-item lines="none">
             <ion-label position="stacked">Cause</ion-label>
-            <ion-input type="text" formControlName="txtcause"></ion-input>
+            <ion-input type="text" formControlName="cause"></ion-input>
           </ion-item>
     
           <ion-item lines="none">
             <ion-label position="stacked">Consequences</ion-label>
-            <ion-input type="text" formControlName="txtconsequences"></ion-input>
+            <ion-input type="text" formControlName="consequence"></ion-input>
           </ion-item>
       
           <ion-item lines="none">
             <ion-label position="stacked">Risk Category</ion-label>
-            <ion-select placeholder="Select One" formControlName="txtriskcat">
+            <ion-select placeholder="Select One" formControlName="category">
               <ion-select-option *ngFor="let val of categoryArr" value="{{ val.id }}">{{ val.name }}</ion-select-option>
             </ion-select>
           </ion-item>
       
           <ion-item lines="none">
             <ion-label position="stacked">Risk CC</ion-label>
-            <ion-select placeholder="Select One" [(ngModel)]="userPref.txtriskcc" formControlName="txtriskcc" multiple="true">
+            <ion-select placeholder="Select One" [(ngModel)]="userPref.risk_cc" formControlName="risk_cc" multiple="true">
               <ion-select-option *ngFor="let val of groupArr" value="{{ val.id }}">{{ val.name }}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -102,14 +102,14 @@
           </ion-list-header>
           <ion-item lines="none">
             <ion-label position="stacked">Impact</ion-label>
-            <ion-select placeholder="Select One" formControlName="txtriskimpact">
+            <ion-select placeholder="Select One" formControlName="existing_impact">
               <ion-select-option *ngFor="let val of impactArr" value="{{ val.id }}">{{ val.name }}</ion-select-option>
             </ion-select>
           </ion-item>
 
           <ion-item lines="none">
             <ion-label position="stacked">Likelihood</ion-label>
-            <ion-select placeholder="Select One" (ionChange)="onChangeLikelihood($event)" formControlName="txtrisklikelihood">
+            <ion-select placeholder="Select One" (ionChange)="onChangeLikelihood($event)" formControlName="existing_likelihood">
               <ion-select-option *ngFor="let val of LikelihoodArr" value="{{ val.id }}">{{ val.name }}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -143,11 +143,6 @@
             <ion-input type="text" placeholder="Select One" formControlName="control_desc"></ion-input>
           </ion-item>
 
-          <!-- <ion-item lines="none">
-            <ion-label position="stacked">Control Effectiveness</ion-label>
-            <ion-input type="text" placeholder="Select One" formControlName="txtrisklikelihood"></ion-input>
-          </ion-item> -->
-
           <ion-item lines="none">
             <div class="form2-term">
               <p>Management can decide to share the risk with a third party via sub-contracting, joint venture, partnership, and outsourcing or insurance.</p>
@@ -161,7 +156,7 @@
               </ion-col>
               <ion-col size="9">
                 <ion-select placeholder="Select One" (ionChange)="onChangeControlPeriod($event)" formControlName="interval_control">
-                  <ion-select-option *ngFor="let val of intervalCtrlArr" value="{{ val.ct_id }}">{{ val.ct_name }}</ion-select-option>
+                  <ion-select-option *ngFor="let val of intervalCtrlArr" value="{{ val.id }}">{{ val.name }}</ion-select-option>
                 </ion-select>
               </ion-col>
             </ion-row>
@@ -183,12 +178,16 @@
           </ion-list-header>
           <ion-item lines="none">
             <ion-label position="stacked">Impact</ion-label>
-            <ion-input type="text" placeholder="Select One" formControlName="txtriskimpact"></ion-input>
+            <ion-select placeholder="Select One" formControlName="residual_impact">
+              <ion-select-option *ngFor="let val of impactArr" value="{{ val.id }}">{{ val.name }}</ion-select-option>
+            </ion-select>
           </ion-item>
 
           <ion-item lines="none">
             <ion-label position="stacked">Likelihood</ion-label>
-            <ion-input type="text" placeholder="Select One" formControlName="txtrisklikelihood"></ion-input>
+            <ion-select placeholder="Select One" (ionChange)="onChangeResLikelihood($event)" formControlName="residual_likelihood">
+              <ion-select-option *ngFor="let val of LikelihoodArr" value="{{ val.id }}">{{ val.name }}</ion-select-option>
+            </ion-select>
           </ion-item>
 
           <ion-item lines="none">
@@ -200,9 +199,23 @@
           <div class="existing-risk">
             <p>Residual Risk Profile Rank</p>
             <div class="existing-risk-badge">
-              <ion-badge color="warning">3</ion-badge>
+              <ion-badge color="warning">{{residu_rank || '0'}}</ion-badge>
             </div>
           </div>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">Risk Treatment</ion-label>
+            <ion-select placeholder="Select One" formControlName="residual_treatment">
+              <ion-select-option *ngFor="let val of TreatmentArr" value="{{ val.id }}">{{ val.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item lines="none">
+            <ion-label position="stacked">Control Effectiveness</ion-label>
+            <ion-select placeholder="Select One" formControlName="effectiveness">
+              <ion-select-option *ngFor="let val of EffectivenessArr" value="{{ val.id }}">{{ val.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-list>
       </ion-slide>
     </ion-slides>

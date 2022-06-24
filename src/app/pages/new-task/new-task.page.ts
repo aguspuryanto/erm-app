@@ -25,8 +25,10 @@ export class NewTaskPage implements OnInit {
   categoryArr: any = []
   impactArr: any = []
   LikelihoodArr: any = []
+  TreatmentArr: any = []
+  EffectivenessArr: any = []
   userPref: any = []
-  intervalCtrlArr: any = [{'d': 'Day(s)', 'm': 'Month(s)', 'y': 'Year(s)'}]
+  intervalCtrlArr: any = [{'id': 'd', 'name': 'Day(s)'}, {'id': 'm', 'name': 'Month(s)'}, {'id': 'y', 'name': 'Year(s)'}]
 
   currentValue = 1;
   taskId: string = 'MKTG_SEA_MYS_002';
@@ -51,41 +53,29 @@ export class NewTaskPage implements OnInit {
 
   ngOnInit() {
     this.newTaskForm = this.fb.group({
-      jenis: ['addTask'],
-      prid: [''],
-      grid: ['', [Validators.required]],
-      cmbinterval: ['', [Validators.required]],
-      txtduedate: ['', [Validators.required]],
-      txtestdate: ['', [Validators.required]],
-      txttitle: ['', [Validators.required]],
-      txtevent: [''],
-      txtcause: [''],
-      txtconsequences: [''],
-      txtriskcat: [''],
-      txtriskowner: [''],
-      txtriskcc: [''],
-      txtriskimpact: [''],
-      txtrisklikelihood: [''],
+      country: ['', [Validators.required]],
+      company: ['', [Validators.required]],
+      department: ['', [Validators.required]],
+      risk_owner: [''],
+      title: ['', [Validators.required]],
+      event: [''],
+      cause: [''],
+      consequence: [''],
+      category: [''],
+      risk_cc: [''],
+      existing_impact: [''],
+      existing_likelihood: [''],
       control_owner: [''],
       control_desc: [''],
       interval: [''],
       interval_control: [''],
       assist_control_owner: [''],
-      // txtdesc: [''],
-      txtassignee: [''],
-      txtfullname: [''],
-      txtcc: [''],
-      councode: ['', [Validators.required]],
-      compcode: ['', [Validators.required]],
-      deptcode: ['', [Validators.required]],
-      txtcat: ['', [Validators.required]],
-      txtcatname: [''],
-      txttopiccode: ['', [Validators.required]],
-      txttopic: [''],
-      txt_file1: [''],
-      txt_file2: [''],
-      txt_file3: [''],
-      txt_file4: [''],
+      residual_impact: [''],
+      residual_likelihood: [''],
+      residual_treatment: [''],
+      effectiveness: [''],
+      // txtcat: ['', [Validators.required]],
+      // txtcatname: [''],
     });
 
     this.getUserPreferences();
@@ -100,53 +90,27 @@ export class NewTaskPage implements OnInit {
     await loading.present();
 
     const getTokenArr = await this.authService.getTokenArr();
-    this.userPref['txtriskowner'] = getTokenArr.us_id;
+    this.userPref['risk_owner'] = getTokenArr.us_id;
     // console.log(this.userPref, '96_userPref')
-    this.newTaskForm.get('txtriskowner').setValue(getTokenArr.us_id);
-
-    // this.authService.getUserPreferences().subscribe((response) => {
-    //   loading.dismiss();
-    //   console.log(response, '77_getUserPreferences')
-    //   let respArray = response.split('||')
-    //   if(respArray[0]=='false') {
-    //     // this.commonService.alertErrorResponse(respArray[1]);
-    //   } else {
-    //     this.userPref['councode'] = respArray[1];
-    //     this.userPref['compcode'] = respArray[2];
-    //     this.userPref['deptcode'] = respArray[3];
-    //     this.userPref['txtcat'] = '';
-    //     console.log(this.userPref, '96_userPref')
-    //   }
-
-      // this.getTaskId();
+    this.newTaskForm.get('risk_owner').setValue(getTokenArr.us_id);
       
-      const getCountryList = this.authService.getCountryActive();
-      // const getCompanyList = this.authService.getCountryCompany({
-      //   query: this.userPref.councode || '062'
-      // });
-      // const getDeptList = this.authService.getDepartment({
-      //   query: this.userPref.compcode || '10'
-      // });
+    const getCountryList = this.authService.getCountryActive();
+    forkJoin([getCountryList])
+    .subscribe(data => {
+      loading.dismiss();
+      console.log(data, '101_');
+      this.groupArr = data[0]['data']['listOwner'];
+      this.countryArr = data[0]['data']['listCountry'];
+      this.categoryArr = data[0]['data']['listCategory'];
+      this.impactArr = data[0]['data']['listImpact'];
+      this.LikelihoodArr = data[0]['data']['listLikelihood'];
+      this.TreatmentArr = data[0]['data']['listTreatment'];
+      this.EffectivenessArr = data[0]['data']['listEffectiveness'];
 
-      forkJoin([getCountryList])
-      .subscribe(data => {
-        loading.dismiss();
-        console.log(data, '124_');
-        this.groupArr = data[0]['data']['listOwner'];
-        this.countryArr = data[0]['data']['listCountry'];
-        this.categoryArr = data[0]['data']['listCategory'];
-        this.impactArr = data[0]['data']['listImpact'];
-        this.LikelihoodArr = data[0]['data']['listLikelihood'];
-
-        // this.topicArr = JSON.parse(JSON.stringify(data[2].data));
-        // this.companyArr = JSON.parse(JSON.stringify(data[4].data));
-        // this.deptArr = JSON.parse(JSON.stringify(data[5].data));
-      });
-
-    // }, (error) => {
-    //   loading.dismiss();
-    //   console.log('Error: ', error.message)
-    // });
+      // this.topicArr = JSON.parse(JSON.stringify(data[2].data));
+      // this.companyArr = JSON.parse(JSON.stringify(data[4].data));
+      // this.deptArr = JSON.parse(JSON.stringify(data[5].data));
+    });
   }
 
   async getTaskId() {
@@ -158,9 +122,7 @@ export class NewTaskPage implements OnInit {
     await loading.present();
     this.authService.getTaskId().subscribe((response) => {
       loading.dismiss();
-      // console.log(response, '39_taskid') //false||Session Expired
       let respArray = response.split('||')
-      // console.log(respArray, '68_taskid')
       if(respArray[0]=='false') {
         // this.commonService.alertErrorResponse(respArray[1]);
       } else {
@@ -174,32 +136,34 @@ export class NewTaskPage implements OnInit {
   }
 
   async addTask() {
-    this.newTaskForm.get('prid').setValue(this.currentValue);
-
-    const getTokenArr = await this.authService.getTokenArr();
-    const formData = new FormData();
-    formData.append('jenis', this.newTaskForm.get('jenis').value);
-    formData.append('prid', this.newTaskForm.get('prid').value);
-    formData.append('grid', this.newTaskForm.get('grid').value);
-    formData.append('cmbinterval', this.newTaskForm.get('cmbinterval').value);
-    formData.append('txtduedate', this.newTaskForm.get('txtduedate').value);
-    formData.append('txtestdate', this.newTaskForm.get('txtestdate').value);
-    formData.append('txttitle', this.newTaskForm.get('txttitle').value);
-    // formData.append('txtdesc', this.newTaskForm.get('txtdesc').value);
-    formData.append('txtassignee', this.newTaskForm.get('txtassignee').value);
-    formData.append('txtfullname', this.newTaskForm.get('txtfullname').value);
-    formData.append('txtcc', this.newTaskForm.get('txtcc').value);
-    formData.append('councode', this.newTaskForm.get('councode').value);
-    formData.append('compcode', this.newTaskForm.get('compcode').value);
-    formData.append('deptcode', this.newTaskForm.get('deptcode').value);
-    formData.append('txtcat', this.newTaskForm.get('txtcat').value);
-    formData.append('txtcatname', this.newTaskForm.get('txtcatname').value);
-    formData.append('txttopiccode', this.newTaskForm.get('txttopiccode').value);
-    formData.append('txttopic', this.newTaskForm.get('txttopic').value);
-    
-    formData.append('us_id', getTokenArr.us_id);
-    formData.append('token', getTokenArr.token);
-    // console.log(formData.entries(), '314_newTaskForm');
+    const formData = {
+      country: this.newTaskForm.get('country').value,
+      company: this.newTaskForm.get('company').value,      
+      department: this.newTaskForm.get('department').value,
+      risk_owner: this.newTaskForm.get('risk_owner').value,
+      title: this.newTaskForm.get('title').value,
+      event: this.newTaskForm.get('event').value,
+      cause: this.newTaskForm.get('cause').value,
+      consequence: this.newTaskForm.get('consequence').value,
+      category: this.newTaskForm.get('category').value,
+      description_category: '',
+      risk_cc: this.newTaskForm.get('risk_cc').value,
+      existing_impact: this.newTaskForm.get('existing_impact').value,
+      existing_likelihood: this.newTaskForm.get('existing_likelihood').value,
+      existing_rank: this.risk_rank,
+      control_owner: this.newTaskForm.get('control_owner').value,
+      control_desc: this.newTaskForm.get('control_desc').value,
+      display_control_owner: '',
+      interval: this.newTaskForm.get('interval').value,
+      interval_control: this.newTaskForm.get('interval_control').value,
+      assist_control_owner: this.newTaskForm.get('assist_control_owner').value,
+      residual_impact: this.newTaskForm.get('residual_impact').value,
+      residual_likelihood: this.newTaskForm.get('residual_likelihood').value,
+      residual_rank: this.residu_rank,
+      residual_treatment: this.newTaskForm.get('residual_treatment').value,
+      effectiveness: this.newTaskForm.get('effectiveness').value,
+      description_effectiveness:  '',
+    }
 
     let loading = await this.loadingCtrl.create({
       message: 'Data Loading ...'
@@ -210,12 +174,13 @@ export class NewTaskPage implements OnInit {
       loading.dismiss();
 
       try {
-        const data = JSON.parse(response)
-        console.log(data);        
-        if(!data.success){
-          this.commonService.alertErrorResponse(data.msg);
+        const data = JSON.parse(JSON.stringify(response));
+        console.log(data, '178_');        
+        if(!data['isSuccess']){
+          this.commonService.alertErrorResponse(data.message);
         } else {
-          this.router.navigateByUrl('/notif-success', { replaceUrl: true });
+          // this.router.navigateByUrl('/notif-success', { replaceUrl: true });
+          this.router.navigateByUrl('/task-success', { replaceUrl: true });
         }
       } catch (err) {
         console.log('339_Error: ', err.message);
@@ -303,9 +268,22 @@ export class NewTaskPage implements OnInit {
   risk_rank = 0;
   async onChangeLikelihood(ev: any){
     console.log(ev.target.value, '')
-    const txtriskimpact = this.newTaskForm.get('txtriskimpact').value;
+    const txtriskimpact = this.newTaskForm.get('existing_impact').value;
     const txtrisklikelihood = ev.target.value; //this.newTaskForm.get('txtrisklikelihood').value;
 
+    this.getRiskRank(txtriskimpact, txtrisklikelihood);
+  }
+
+  residu_rank = 0;
+  async onChangeResLikelihood(ev: any){
+    console.log(ev.target.value, '')
+    const txtriskimpact = this.newTaskForm.get('residual_impact').value;
+    const txtrisklikelihood = ev.target.value; //this.newTaskForm.get('txtrisklikelihood').value;
+
+    this.getRisiduRank(txtriskimpact, txtrisklikelihood);
+  }
+
+  async getRiskRank(txtriskimpact, txtrisklikelihood){    
     if(txtriskimpact && txtrisklikelihood) {
       let loading = await this.loadingCtrl.create({
         message: 'Data Loading ...'
@@ -322,6 +300,30 @@ export class NewTaskPage implements OnInit {
         // this.risk_rank = newData['data'];
         let respArray = newData['data'].split('||')
         this.risk_rank = respArray[0];
+      }, (error) => {
+        loading.dismiss();
+        this.commonService.alertErrorResponse(error.message);
+      });
+    }
+  }
+
+  async getRisiduRank(txtriskimpact, txtrisklikelihood){    
+    if(txtriskimpact && txtrisklikelihood) {
+      let loading = await this.loadingCtrl.create({
+        message: 'Data Loading ...'
+      });
+   
+      await loading.present();
+      this.authService.getRangking({
+        impact_id: txtriskimpact,
+        likelihood_id: txtrisklikelihood
+      }).subscribe((response) => {
+        loading.dismiss();
+        console.log(response);
+        var newData = JSON.parse(JSON.stringify(response));
+        // this.risk_rank = newData['data'];
+        let respArray = newData['data'].split('||')
+        this.residu_rank = respArray[0];
       }, (error) => {
         loading.dismiss();
         this.commonService.alertErrorResponse(error.message);
@@ -401,7 +403,9 @@ export class NewTaskPage implements OnInit {
   slideNext(){
     if(this.currentValue == 4) {
       // submit
-      this.router.navigateByUrl('/task-success', { replaceUrl: true });
+      console.log(this.newTaskForm.value);
+      this.addTask();
+      // this.router.navigateByUrl('/task-success', { replaceUrl: true });
     } else {
       this.currentValue++;
       this.slides.slideNext();

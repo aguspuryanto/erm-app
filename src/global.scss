@@ -171,3 +171,12 @@ ion-content {
 	--ion-color-shade: var(--ion-color-pending-approval-shade);
 	--ion-color-tint: var(--ion-color-pending-approval-tint);
 }
+
+.ion-color-extreme {
+	--ion-color-base: var(--ion-color-major);
+	--ion-color-base-rgb: var(--ion-color-major-rgb);
+	--ion-color-contrast: var(--ion-color-major-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-major-contrast-rgb);
+	--ion-color-shade: var(--ion-color-major-shade);
+	--ion-color-tint: var(--ion-color-major-tint);
+}

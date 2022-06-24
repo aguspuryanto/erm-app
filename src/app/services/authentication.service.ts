@@ -501,19 +501,6 @@ export class AuthenticationService {
       )
   }
 
-  postTaskId(formData) {
-      const HttpUploadOptions = {
-          headers: new HttpHeaders({"Content-Type": "multipart/form-data"})
-      }
-
-      return this.http.post(`${API_SITE}/UpdTask`, formData, {responseType: 'text'}).pipe(
-          tap({
-              next: (data) => console.log('next:', data),
-              error: (error) => console.log(error)
-          })
-      );
-  }
-
   dataUpdTaskGET(url, formData){
       formData['us_id'] = this.keyOfData;
       formData['token'] = this.token;
@@ -607,56 +594,52 @@ export class AuthenticationService {
       return dataPromise
   }
 
-  webLogin(params) {
-    const httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
-
-    return this.http.post(`${WEBAPI_SITE}/restapi/user/signin`, params).pipe(
-        map((data: any) => {
-            return data;
-        }),
-        tap({
-            next: (data) => {
-                console.log('next:', data.data.authtoken)
-                if (data.isSuccess == true) {
-                    Storage.set({key: DATA_KEY, value: JSON.stringify(data.data)});
-                    Storage.set({key: TOKEN_KEY, value: data.data.authtoken});
-                    this.isAuthenticated.next(true);
-                } else {
-                    Storage.remove({key: DATA_KEY});
-                    Storage.remove({key: TOKEN_KEY});
-                    this.isAuthenticated.next(false);
-                }
-            },
-            error: (error) => console.log(error)
-        })
-    )
-  }
-
-  // Summary Risk
-  sumaryRisk() {
-    console.log(this.keyOfData, 'this.keyOfData')
-    let params = {
-        us_id: this.keyOfData.us_id
+    getEmbedToken(){
+        return { us_id: this.keyOfData.us_id, token: this.token }
     }
-    // let queryParams = this.commonService.ObjectToParams(params);
 
-    return this.http.post(`${WEBAPI_SITE}/restapi/risk/summary`, params).pipe(
-        map((data: any) => {
-            return data;
-        }),
-        tap({
-            next: (data) => console.log('next:', data),
-            error: (error) => console.log(error)
-        })
-    );
-  }
+    // METHOD: POST
+    webLogin(params) {
+        return this.http.post(`${WEBAPI_SITE}/restapi/user/signin`, params).pipe(
+            map((data: any) => {
+                return data;
+            }),
+            tap({
+                next: (data) => {
+                    console.log('next:', data.data.authtoken)
+                    if (data.isSuccess == true) {
+                        Storage.set({key: DATA_KEY, value: JSON.stringify(data.data)});
+                        Storage.set({key: TOKEN_KEY, value: data.data.authtoken});
+                        this.isAuthenticated.next(true);
+                    } else {
+                        Storage.remove({key: DATA_KEY});
+                        Storage.remove({key: TOKEN_KEY});
+                        this.isAuthenticated.next(false);
+                    }
+                },
+                error: (error) => console.log(error)
+            })
+        )
+    }
 
+    // Summary Risk
+    sumaryRisk() {
+        let newparams = this.getEmbedToken()
+        return this.http.post(`${WEBAPI_SITE}/restapi/risk/summary`, newparams).pipe(
+            map((data: any) => {
+                return data;
+            }),
+            tap({
+                next: (data) => console.log('next:', data),
+                error: (error) => console.log(error)
+            })
+        );
+    }
+    
     // Detail Risk
     infoRisk(params) {
-        let newparams = {...params, ...{ us_id: this.keyOfData.us_id }};
-        return this.http.post(`${WEBAPI_SITE}/restapi/risk/risk-info`, newparams).pipe(
+        let newparams = {...params, ...this.getEmbedToken()};
+        return this.http.post(`${RESTAPI}/risk/risk-info`, newparams).pipe(
             map((data: any) => {
                 return data;
             }),
@@ -667,11 +650,23 @@ export class AuthenticationService {
         );
     }
 
+    postTaskId(formData) {
+        let newparams = {...formData, ...this.getEmbedToken()};
+        return this.http.post(`${RESTAPI}/risk/save-risk`, newparams).pipe(
+            map((data: any) => {
+                return data;
+            }),
+            tap({
+                next: (data) => console.log('next:', data),
+                error: (error) => console.log(error)
+            })
+        );
+    }
+
+    // METHOD: GET
     getCountryActive(params: any = {}) {
-        params['us_id'] = this.keyOfData.us_id;
-        params['token'] = this.token;  
-        let queryParams = this.commonService.ObjectToParams(params);
-        // console.log(queryParams, 'queryParams')  
+        let newparams = {...params, ...this.getEmbedToken()};
+        let queryParams = this.commonService.ObjectToParams(newparams);
         return this.http.get(`${RESTAPI}/risk/country?` + queryParams).pipe(
             tap({
               next: (data) => console.log('next:', data),
@@ -681,11 +676,8 @@ export class AuthenticationService {
     }
 
     getCountryCompany(params: any = {}) {
-        params['us_id'] = this.keyOfData.us_id;
-        params['token'] = this.token;  
-        let queryParams = this.commonService.ObjectToParams(params)
-        // console.log(queryParams, 'queryParams')
-  
+        let newparams = {...params, ...this.getEmbedToken()};
+        let queryParams = this.commonService.ObjectToParams(newparams);
         return this.http.get(`${RESTAPI}/risk/company?` + queryParams).pipe(
             tap({
                 next: (data) => console.log('next:', data),
@@ -695,12 +687,7 @@ export class AuthenticationService {
     }
 
     getDepartment(params: any = {}) {
-        // params['query'] = '10';
-        // params['us_id'] = this.keyOfData.us_id;
-        // params['token'] = this.token;  
-        // let queryParams = this.commonService.ObjectToParams(params);
-        // console.log(queryParams, 'queryParams')
-        let newparams = {...params, ...{ us_id: this.keyOfData.us_id, token: this.token }};
+        let newparams = {...params, ...this.getEmbedToken()};
         let queryParams = this.commonService.ObjectToParams(newparams);
         return this.http.get(`${RESTAPI}/risk/department?` + queryParams).pipe(
             tap({
@@ -711,7 +698,7 @@ export class AuthenticationService {
     }
 
     getRangking(params: any = {}){
-        let newparams = {...params, ...{ us_id: this.keyOfData.us_id, token: this.token }};
+        let newparams = {...params, ...this.getEmbedToken()};
         let queryParams = this.commonService.ObjectToParams(newparams);
         return this.http.get(`${RESTAPI}/risk/getranking?` + queryParams).pipe(
             tap({
