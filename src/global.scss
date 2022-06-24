@@ -28,7 +28,6 @@
 ion-header {
 	text-align: center;
 	font-size: 16px;
-    // --ion-text-color: var(--ion-color-primary, '#2BA0C5');
 	ion-toolbar {
 		--min-height: 50px;
 	}
@@ -42,14 +41,14 @@ ion-header {
 
 ion-content {
     --ion-text-color: var(--ion-color-primary, '#2BA0C5');
-}
 
-ion-searchbar {
-//   text-align: right;
-  ion-icon {
-    // right: 5px !important;
-    // left: auto !important;
-  }
+	ion-searchbar{
+	  .searchbar-input-container{
+		.searchbar-input{
+		  border-radius: 10px !important;
+		}
+	  }
+	}
 }
 
 .my-customtask .alert-wrapper {
@@ -57,12 +56,6 @@ ion-searchbar {
 }
 
 .ion-color-overdue {
-	// --ion-color-base: var(--ion-color-overdue);
-	// --ion-color-base-rgb: var(--ion-color-overdue-rgb);
-	// --ion-color-contrast: var(--ion-color-overdue-contrast);
-	// --ion-color-contrast-rgb: var(--ion-color-overdue-contrast-rgb);
-	// --ion-color-shade: var(--ion-color-overdue-shade);
-	// --ion-color-tint: var(--ion-color-overdue-tint);
 	--ion-color-base: var(--ion-color-major);
 	--ion-color-base-rgb: var(--ion-color-major-rgb);
 	--ion-color-contrast: var(--ion-color-major-contrast);
@@ -81,12 +74,6 @@ ion-searchbar {
 }
 
 .ion-color-completed {
-	// --ion-color-base: var(--ion-color-completed);
-	// --ion-color-base-rgb: var(--ion-color-completed-rgb);
-	// --ion-color-contrast: var(--ion-color-completed-contrast);
-	// --ion-color-contrast-rgb: var(--ion-color-completed-contrast-rgb);
-	// --ion-color-shade: var(--ion-color-completed-shade);
-	// --ion-color-tint: var(--ion-color-completed-tint);
 	--ion-color-base: var(--ion-color-insignificant);
 	--ion-color-base-rgb: var(--ion-color-insignificant-rgb);
 	--ion-color-contrast: var(--ion-color-insignificant-contrast);
@@ -96,12 +83,6 @@ ion-searchbar {
 }
 
 .ion-color-closed {
-	// --ion-color-base: var(--ion-color-closed);
-	// --ion-color-base-rgb: var(--ion-color-closed-rgb);
-	// --ion-color-contrast: var(--ion-color-closed-contrast);
-	// --ion-color-contrast-rgb: var(--ion-color-closed-contrast-rgb);
-	// --ion-color-shade: var(--ion-color-closed-shade);
-	// --ion-color-tint: var(--ion-color-closed-tint);
 	--ion-color-base: var(--ion-color-catasthropic);
 	--ion-color-base-rgb: var(--ion-color-catasthropic-rgb);
 	--ion-color-contrast: var(--ion-color-catasthropic-contrast);
@@ -189,12 +170,4 @@ ion-searchbar {
 	--ion-color-contrast-rgb: var(--ion-color-pending-approval-contrast-rgb);
 	--ion-color-shade: var(--ion-color-pending-approval-shade);
 	--ion-color-tint: var(--ion-color-pending-approval-tint);
-}
-
-ion-searchbar{
-  .searchbar-input-container{
-    .searchbar-input{
-      border-radius: 10px !important;
-    }
-  }
 }
